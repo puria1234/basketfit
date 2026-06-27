@@ -4,8 +4,8 @@ import type { UserProfile } from "@/lib/types";
 import { buildRecommendation, buildPrompt } from "@/lib/recommender";
 
 const client = new OpenAI({
-  apiKey: process.env.OPENMODEL_API_KEY ?? "",
-  baseURL: "https://api.openmodel.ai/v1",
+  apiKey: process.env.NVIDIA_API_KEY ?? "",
+  baseURL: "https://integrate.api.nvidia.com/v1",
 });
 
 export async function POST(req: NextRequest) {
@@ -17,19 +17,13 @@ export async function POST(req: NextRequest) {
   let aiCoachMessage = "Train consistently and the right ball will feel like an extension of your hand!";
 
   try {
-    const response = await client.responses.create({
-      model: "gpt-4o-mini",
-      input: prompt,
+    const response = await client.chat.completions.create({
+      model: "meta/llama-4-maverick",
+      messages: [{ role: "user", content: prompt }],
+      max_tokens: 120,
+      temperature: 0.7,
     });
-    // The Responses API returns output as an array of content blocks
-    const chunks: string[] = [];
-    for (const block of response.output ?? []) {
-      if (block.type !== "message" || !("content" in block)) continue;
-      for (const part of block.content) {
-        if (part.type === "output_text") chunks.push(part.text);
-      }
-    }
-    const text = chunks.join(" ").trim();
+    const text = response.choices[0]?.message?.content?.trim();
     if (text) aiCoachMessage = text;
   } catch (err) {
     console.error("AI coach error:", err);

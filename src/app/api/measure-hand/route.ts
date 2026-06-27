@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from "next/server";
 import OpenAI from "openai";
 
 const client = new OpenAI({
-  apiKey: process.env.OPENMODEL_API_KEY ?? "",
-  baseURL: "https://api.openmodel.ai/v1",
+  apiKey: process.env.NVIDIA_API_KEY ?? "",
+  baseURL: "https://integrate.api.nvidia.com/v1",
 });
 
 const PROMPT = `You are an expert at measuring hands from photos.
@@ -17,46 +17,44 @@ Reply with ONLY a single decimal number. Nothing else. Example: 21.5`;
 export async function POST(req: NextRequest) {
   const { imageBase64, mimeType } = await req.json() as { imageBase64: string; mimeType: string };
 
-  if (!process.env.OPENMODEL_API_KEY) {
+  if (!process.env.NVIDIA_API_KEY) {
     return NextResponse.json({ error: "API key not configured" }, { status: 503 });
   }
 
   try {
-    const response = await client.responses.create({
-      model: "gpt-4o",
-      input: [
+    const response = await client.chat.completions.create({
+      model: "minimaxai/minimax-m3",
+      messages: [
         {
           role: "user",
           content: [
             {
-              type: "input_image",
-              image_url: `data:${mimeType};base64,${imageBase64}`,
-              detail: "high",
+              type: "image_url",
+              image_url: {
+                url: `data:${mimeType};base64,${imageBase64}`,
+              },
             },
             {
-              type: "input_text",
+              type: "text",
               text: PROMPT,
             },
           ],
         },
       ],
+      max_tokens: 16,
+      temperature: 0,
     });
 
-    const chunks: string[] = [];
-    for (const block of response.output ?? []) {
-      if (block.type !== "message" || !("content" in block)) continue;
-      for (const part of block.content) {
-        if (part.type === "output_text") chunks.push(part.text);
-      }
-    }
-    const raw = chunks.join(" ").trim();
+    const raw = response.choices[0]?.message?.content?.trim() ?? "";
     const handSpanCm = parseFloat(raw);
 
     if (isNaN(handSpanCm) || handSpanCm < 10 || handSpanCm > 35) {
-      return NextResponse.json({ error: "Could not read a hand span from the image. Try a clearer photo with your hand fully spread." }, { status: 422 });
+      return NextResponse.json(
+        { error: "Could not read a hand span from the image. Try a clearer photo with your hand fully spread." },
+        { status: 422 }
+      );
     }
 
-    // Round to nearest 0.5 cm
     return NextResponse.json({ handSpanCm: Math.round(handSpanCm * 2) / 2 });
   } catch (err) {
     console.error("Vision error:", err);

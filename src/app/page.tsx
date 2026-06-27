@@ -1,35 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useState, Suspense } from "react";
+import dynamic from "next/dynamic";
 import type { UserProfile, Recommendation, BallSize } from "@/lib/types";
 import { BALL_SIZE_INFO } from "@/lib/types";
 
-const SIZE_COLORS: Record<BallSize, string> = {
-  3: "from-sky-500 to-sky-700",
-  5: "from-green-500 to-green-700",
-  6: "from-violet-500 to-violet-700",
-  7: "from-orange-500 to-orange-700",
-};
-
-function SizeBar({ score }: { score: number }) {
-  return (
-    <div className="w-full mt-2">
-      <div className="flex justify-between text-xs opacity-60 mb-1">
-        <span>Size 3</span>
-        <span>Size 5</span>
-        <span>Size 6</span>
-        <span>Size 7</span>
-      </div>
-      <div className="relative h-3 bg-white/20 rounded-full overflow-hidden">
-        <div
-          className="h-full bg-white/80 transition-all duration-700"
-          style={{ width: `${score}%` }}
-        />
-      </div>
-      <p className="text-right text-xs opacity-60 mt-1">Fit score: {score}/100</p>
-    </div>
-  );
-}
+const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: false });
 
 const defaultProfile: UserProfile = {
   age: 16,
@@ -37,7 +13,7 @@ const defaultProfile: UserProfile = {
   handSpanCm: 21,
   experience: "intermediate",
   playingType: "indoor",
-  position: "guard",
+  position: "none",
   gender: "male",
 };
 
@@ -72,260 +48,312 @@ export default function Home() {
   }
 
   return (
-    <main className="flex-1 flex flex-col items-center px-4 py-12 gap-10">
-      {/* Header */}
-      <header className="text-center max-w-xl">
-        <div className="text-5xl mb-3">🏀</div>
-        <h1 className="text-4xl font-bold tracking-tight text-white mb-2">BasketFit</h1>
-        <p className="text-slate-400 text-lg">
-          Stop guessing your basketball size. Get an AI recommendation tailored to your body and game.
+    <main className="min-h-screen bg-black text-white flex flex-col items-center">
+      {/* Hero */}
+      <section className="w-full flex flex-col items-center pt-10 pb-2">
+        <Suspense fallback={<div className="h-[340px] flex items-center justify-center text-gray-600">Loading…</div>}>
+          <Basketball3D />
+        </Suspense>
+
+        <h1
+          className="text-6xl sm:text-7xl font-black tracking-tighter mt-2"
+          style={{
+            background: "linear-gradient(180deg, #ffffff 0%, #b0b0b0 45%, #ffffff 70%, #888888 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          BASKETFIT
+        </h1>
+        <p
+          className="mt-2 text-base sm:text-lg tracking-widest uppercase font-medium"
+          style={{
+            background: "linear-gradient(90deg, #555 0%, #ccc 50%, #555 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          Find your perfect ball size
         </p>
-      </header>
+      </section>
 
       {/* Form */}
-      <form
-        onSubmit={handleSubmit}
-        className="w-full max-w-2xl bg-slate-800 rounded-2xl p-8 shadow-2xl space-y-6"
-      >
-        <h2 className="text-xl font-semibold text-white">Tell us about yourself</h2>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Age (years)">
-            <input
-              type="number"
+      <section className="w-full max-w-md px-5 mt-8 mb-10">
+        <form onSubmit={handleSubmit} className="space-y-5">
+          {/* Age + Height */}
+          <div className="grid grid-cols-2 gap-3">
+            <NumInput
+              label="Age"
+              unit="yrs"
               min={4}
               max={60}
               value={profile.age}
-              onChange={(e) => set("age", Number(e.target.value))}
-              className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-400"
-              required
+              onChange={(v) => set("age", v)}
             />
-          </Field>
-          <Field label="Height (cm)">
-            <input
-              type="number"
+            <NumInput
+              label="Height"
+              unit="cm"
               min={80}
               max={230}
               value={profile.heightCm}
-              onChange={(e) => set("heightCm", Number(e.target.value))}
-              className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-400"
-              required
+              onChange={(v) => set("heightCm", v)}
             />
-          </Field>
-        </div>
+          </div>
 
-        <Field
-          label="Hand Span (cm)"
-          hint="Measure from tip of thumb to tip of pinky with hand fully spread"
-        >
-          <input
-            type="number"
+          {/* Hand span */}
+          <NumInput
+            label="Hand span"
+            unit="cm"
             min={10}
             max={35}
             step={0.5}
             value={profile.handSpanCm}
-            onChange={(e) => set("handSpanCm", Number(e.target.value))}
-            className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-400"
-            required
+            onChange={(v) => set("handSpanCm", v)}
+            hint="Thumb tip → pinky tip, hand fully spread"
           />
-        </Field>
 
-        <Field label="Experience level">
-          <RadioGroup
-            options={[
-              { value: "beginner", label: "Beginner" },
-              { value: "intermediate", label: "Intermediate" },
-              { value: "advanced", label: "Advanced" },
-            ]}
-            value={profile.experience}
-            onChange={(v) => set("experience", v as UserProfile["experience"])}
-          />
-        </Field>
+          {/* Experience */}
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Experience</label>
+            <SegmentedControl
+              options={["beginner", "intermediate", "advanced"]}
+              labels={["Beginner", "Intermediate", "Advanced"]}
+              value={profile.experience}
+              onChange={(v) => set("experience", v as UserProfile["experience"])}
+            />
+          </div>
 
-        <Field label="Where do you mainly play?">
-          <RadioGroup
-            options={[
-              { value: "street", label: "Street / Outdoor" },
-              { value: "indoor", label: "Indoor / Gym" },
-              { value: "competitive", label: "Competitive / League" },
-            ]}
-            value={profile.playingType}
-            onChange={(v) => set("playingType", v as UserProfile["playingType"])}
-          />
-        </Field>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-          <Field label="Position (optional)">
-            <select
-              value={profile.position}
-              onChange={(e) => set("position", e.target.value as UserProfile["position"])}
-              className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-400"
-            >
-              <option value="none">Not specified</option>
-              <option value="guard">Guard</option>
-              <option value="forward">Forward</option>
-              <option value="center">Center</option>
-            </select>
-          </Field>
-          <Field label="Gender (optional)">
-            <select
+          {/* Gender */}
+          <div>
+            <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Gender</label>
+            <SegmentedControl
+              options={["male", "female", "other"]}
+              labels={["Male", "Female", "Other"]}
               value={profile.gender}
-              onChange={(e) => set("gender", e.target.value as UserProfile["gender"])}
-              className="w-full bg-slate-700 border border-slate-600 rounded-lg px-3 py-2 text-white focus:outline-none focus:border-orange-400"
-            >
-              <option value="male">Male</option>
-              <option value="female">Female</option>
-              <option value="other">Other / Prefer not to say</option>
-            </select>
-          </Field>
-        </div>
+              onChange={(v) => set("gender", v as UserProfile["gender"])}
+            />
+          </div>
 
-        <button
-          type="submit"
-          disabled={loading}
-          className="w-full py-3 px-6 rounded-xl bg-orange-500 hover:bg-orange-400 disabled:opacity-50 disabled:cursor-not-allowed text-white font-semibold text-lg transition-colors"
+          <button
+            type="submit"
+            disabled={loading}
+            className="w-full py-4 rounded-2xl font-bold text-base tracking-widest uppercase disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+            style={{
+              background: loading
+                ? "#222"
+                : "linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%)",
+              color: loading ? "#555" : "#000",
+            }}
+          >
+            {loading ? "Analysing…" : "Get My Size →"}
+          </button>
+
+          {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+        </form>
+      </section>
+
+      {/* Result */}
+      {result && (
+        <section className="w-full max-w-md px-5 mb-16">
+          <ResultCard result={result} />
+        </section>
+      )}
+
+      {/* Reference */}
+      <section className="w-full max-w-md px-5 mb-16">
+        <p
+          className="text-xs uppercase tracking-widest mb-4"
+          style={{
+            background: "linear-gradient(90deg, #555 0%, #aaa 50%, #555 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
         >
-          {loading ? "Analysing…" : "Get My Recommendation →"}
-        </button>
-
-        {error && <p className="text-red-400 text-sm text-center">{error}</p>}
-      </form>
-
-      {/* Results */}
-      {result && <ResultCard result={result} />}
-
-      {/* Size reference table */}
-      <SizeReference />
+          Size reference
+        </p>
+        <div className="grid grid-cols-2 gap-2">
+          {([3, 5, 6, 7] as BallSize[]).map((s) => {
+            const info = BALL_SIZE_INFO[s];
+            return (
+              <div
+                key={s}
+                className="border border-white/10 rounded-xl p-3 flex gap-3 items-center bg-white/[0.03]"
+              >
+                <div
+                  className="w-9 h-9 rounded-full flex items-center justify-center font-black text-sm shrink-0"
+                  style={{
+                    background: "linear-gradient(135deg, #ffffff 0%, #888 100%)",
+                    color: "#000",
+                  }}
+                >
+                  {s}
+                </div>
+                <div>
+                  <p className="text-white text-xs font-semibold">{info.label}</p>
+                  <p className="text-gray-600 text-xs">{info.audience}</p>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      </section>
     </main>
   );
 }
 
 function ResultCard({ result }: { result: Recommendation }) {
   const info = BALL_SIZE_INFO[result.primarySize];
-  const gradient = SIZE_COLORS[result.primarySize];
-
   return (
-    <div className="w-full max-w-2xl space-y-4">
-      <div className={`bg-gradient-to-br ${gradient} rounded-2xl p-8 text-white shadow-2xl`}>
-        <p className="text-sm uppercase tracking-widest font-medium opacity-80 mb-1">Your Recommendation</p>
-        <h2 className="text-4xl font-bold mb-1">{info.label}</h2>
-        <p className="opacity-80 mb-4">
+    <div className="rounded-2xl overflow-hidden border border-white/10">
+      {/* Top banner */}
+      <div
+        className="p-6"
+        style={{
+          background: "linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 50%, #111 100%)",
+        }}
+      >
+        <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Your Size</p>
+        <h2
+          className="text-5xl font-black tracking-tight"
+          style={{
+            background: "linear-gradient(180deg, #ffffff 0%, #aaaaaa 50%, #ffffff 100%)",
+            WebkitBackgroundClip: "text",
+            WebkitTextFillColor: "transparent",
+            backgroundClip: "text",
+          }}
+        >
+          {info.label}
+        </h2>
+        <p className="text-gray-500 text-sm mt-1">
           {info.circumference} circumference · {info.weight}
         </p>
-        <SizeBar score={result.score} />
+
+        {/* Score bar */}
+        <div className="mt-4">
+          <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
+            <div
+              className="h-full rounded-full transition-all duration-700"
+              style={{
+                width: `${result.score}%`,
+                background: "linear-gradient(90deg, #555 0%, #ffffff 100%)",
+              }}
+            />
+          </div>
+          <p className="text-right text-xs text-gray-600 mt-1">Fit score {result.score}/100</p>
+        </div>
       </div>
 
-      <div className="bg-slate-800 rounded-2xl p-6 space-y-5">
-        <Section title="Why this size?">
-          <p className="text-slate-300 leading-relaxed">{result.explanation}</p>
-        </Section>
+      {/* Body */}
+      <div className="p-5 space-y-4 bg-[#0a0a0a]">
+        <Block title="Why this size">
+          <p className="text-gray-400 text-sm leading-relaxed">{result.explanation}</p>
+        </Block>
 
         {result.trainingSize && (
-          <Section title="Training tip">
-            <p className="text-slate-300 leading-relaxed">
-              Drop to a{" "}
-              <span className="text-orange-400 font-semibold">
+          <Block title="Training tip">
+            <p className="text-gray-400 text-sm leading-relaxed">
+              Use a{" "}
+              <span className="text-white font-semibold">
                 {BALL_SIZE_INFO[result.trainingSize].label}
               </span>{" "}
-              during skill drills. A tighter grip forces better finger-pad control and will make
-              your primary ball feel effortless in games.
+              for skill drills. The tighter grip builds better finger-pad control.
             </p>
-          </Section>
+          </Block>
         )}
 
-        <Section title="AI Coach says">
-          <blockquote className="border-l-4 border-orange-500 pl-4 text-slate-300 italic leading-relaxed">
+        <Block title="AI Coach">
+          <p className="text-gray-400 text-sm leading-relaxed italic border-l border-white/20 pl-3">
             {result.aiCoachMessage}
-          </blockquote>
-        </Section>
+          </p>
+        </Block>
       </div>
     </div>
   );
 }
 
-function Section({ title, children }: { title: string; children: React.ReactNode }) {
+function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <h3 className="text-xs uppercase tracking-widest text-slate-400 font-semibold mb-2">{title}</h3>
+      <p className="text-xs uppercase tracking-widest text-gray-600 mb-1.5">{title}</p>
       {children}
     </div>
   );
 }
 
-function Field({
+function NumInput({
   label,
+  unit,
+  min,
+  max,
+  step = 1,
+  value,
+  onChange,
   hint,
-  children,
 }: {
   label: string;
+  unit: string;
+  min: number;
+  max: number;
+  step?: number;
+  value: number;
+  onChange: (v: number) => void;
   hint?: string;
-  children: React.ReactNode;
 }) {
   return (
-    <div className="space-y-1">
-      <label className="block text-sm font-medium text-slate-300">{label}</label>
-      {hint && <p className="text-xs text-slate-500">{hint}</p>}
-      {children}
+    <div>
+      <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1.5">{label}</label>
+      {hint && <p className="text-xs text-gray-700 mb-1.5">{hint}</p>}
+      <div className="flex items-center gap-2 bg-white/[0.05] border border-white/10 rounded-xl px-3 py-3 focus-within:border-white/30 transition-colors">
+        <input
+          type="number"
+          min={min}
+          max={max}
+          step={step}
+          value={value}
+          onChange={(e) => onChange(Number(e.target.value))}
+          className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0"
+          required
+        />
+        <span className="text-gray-600 text-xs uppercase tracking-widest shrink-0">{unit}</span>
+      </div>
     </div>
   );
 }
 
-function RadioGroup({
+function SegmentedControl({
   options,
+  labels,
   value,
   onChange,
 }: {
-  options: { value: string; label: string }[];
+  options: string[];
+  labels: string[];
   value: string;
   onChange: (v: string) => void;
 }) {
   return (
-    <div className="flex flex-wrap gap-2">
-      {options.map((o) => (
+    <div className="flex gap-1 bg-white/[0.04] border border-white/10 rounded-xl p-1">
+      {options.map((opt, i) => (
         <button
-          key={o.value}
+          key={opt}
           type="button"
-          onClick={() => onChange(o.value)}
-          className={`px-4 py-2 rounded-lg text-sm font-medium border transition-colors ${
-            value === o.value
-              ? "bg-orange-500 border-orange-500 text-white"
-              : "bg-slate-700 border-slate-600 text-slate-300 hover:border-orange-400"
-          }`}
+          onClick={() => onChange(opt)}
+          className="flex-1 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all"
+          style={
+            value === opt
+              ? {
+                  background: "linear-gradient(135deg, #ffffff 0%, #cccccc 100%)",
+                  color: "#000",
+                }
+              : { color: "#555" }
+          }
         >
-          {o.label}
+          {labels[i]}
         </button>
       ))}
     </div>
-  );
-}
-
-function SizeReference() {
-  const sizes: BallSize[] = [3, 5, 6, 7];
-  return (
-    <section className="w-full max-w-2xl pb-8">
-      <h2 className="text-lg font-semibold text-white mb-4">Basketball Size Reference</h2>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        {sizes.map((s) => {
-          const info = BALL_SIZE_INFO[s];
-          const gradient = SIZE_COLORS[s];
-          return (
-            <div key={s} className="bg-slate-800 rounded-xl p-4 flex items-start gap-3">
-              <div
-                className={`w-10 h-10 rounded-full bg-gradient-to-br ${gradient} flex items-center justify-center text-white font-bold text-sm shrink-0`}
-              >
-                {s}
-              </div>
-              <div>
-                <p className="font-semibold text-white text-sm">{info.label}</p>
-                <p className="text-xs text-slate-400">
-                  {info.circumference} · {info.weight}
-                </p>
-                <p className="text-xs text-slate-500 mt-1">{info.audience}</p>
-              </div>
-            </div>
-          );
-        })}
-      </div>
-    </section>
   );
 }

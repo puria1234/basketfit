@@ -7,77 +7,95 @@ import { BALL_SIZE_INFO } from "@/lib/types";
 
 const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: false });
 
-// ─── Shop data ────────────────────────────────────────────────────────────────
+// ─── Product data ────────────────────────────────────────────────────────────
 
 const BALL_PICKS: Record<
   BallSize,
-  { name: string; tag: string; amazon: string; walmart: string; target: string }[]
+  { name: string; tag: string; price: string; desc: string; amazon: string; walmart: string; target: string }[]
 > = {
   7: [
     {
       name: "Wilson Evolution Indoor",
-      tag: "Best indoor",
-      amazon: "https://www.amazon.com/s?k=Wilson+Evolution+Indoor+Basketball+Size+7",
-      walmart: "https://www.walmart.com/search?q=Wilson+Evolution+Indoor+Basketball",
-      target: "https://www.target.com/s?searchTerm=Wilson+Evolution+Basketball+Size+7",
+      tag: "Editor's Pick",
+      price: "~$60",
+      desc: "Microfiber composite cover with cushion core — the most played indoor game ball in America.",
+      amazon: "https://www.amazon.com/s?k=Wilson+Evolution+Indoor+Basketball+Official+29.5+Size+7",
+      walmart: "https://www.walmart.com/search?q=Wilson+Evolution+Indoor+Basketball+29.5",
+      target: "https://www.target.com/s?searchTerm=Wilson+Evolution+Basketball+29.5+Size+7",
     },
     {
-      name: "Spalding NBA Street",
-      tag: "Best outdoor",
-      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Street+Basketball+Size+7",
-      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Street+Basketball+Size+7",
+      name: "Spalding NBA Street Outdoor",
+      tag: "Best for outdoor",
+      price: "~$30",
+      desc: "NBA-licensed rubber cover built for concrete and asphalt. Durable all-season grip.",
+      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Street+Basketball+29.5+Size+7+Outdoor",
+      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Street+Basketball+29.5+Outdoor",
       target: "https://www.target.com/s?searchTerm=Spalding+NBA+Street+Basketball+Size+7",
     },
   ],
   6: [
     {
       name: "Wilson NCAA Women's",
-      tag: "Best overall",
-      amazon: "https://www.amazon.com/s?k=Wilson+NCAA+Womens+Basketball+Size+6",
-      walmart: "https://www.walmart.com/search?q=Wilson+NCAA+Womens+Basketball+Size+6",
+      tag: "Editor's Pick",
+      price: "~$45",
+      desc: "Official women's composite ball. Used in college programs across the country.",
+      amazon: "https://www.amazon.com/s?k=Wilson+NCAA+Womens+Basketball+Size+6+28.5+Composite",
+      walmart: "https://www.walmart.com/search?q=Wilson+NCAA+Womens+Basketball+28.5+Size+6",
       target: "https://www.target.com/s?searchTerm=Wilson+NCAA+Womens+Basketball+Size+6",
     },
     {
       name: "Spalding NBA Women's",
       tag: "Official game ball",
-      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Official+Womens+Basketball+Size+6",
-      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Womens+Basketball+Size+6",
+      price: "~$40",
+      desc: "WNBA official size and weight. Premium pebbled composite for a consistent feel.",
+      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Womens+Basketball+28.5+Official",
+      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Womens+Basketball+28.5",
       target: "https://www.target.com/s?searchTerm=Spalding+NBA+Womens+Basketball",
     },
   ],
   5: [
     {
-      name: "Spalding NBA Youth",
-      tag: "Best youth",
-      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Youth+Basketball+Size+5",
-      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Youth+Basketball+Size+5",
-      target: "https://www.target.com/s?searchTerm=Spalding+Youth+Basketball+Size+5",
+      name: "Wilson NCAA Youth",
+      tag: "Editor's Pick",
+      price: "~$25",
+      desc: "27.5\" soft composite cover ideal for ages 9–11. Easy to grip and control.",
+      amazon: "https://www.amazon.com/s?k=Wilson+NCAA+Youth+Basketball+27.5+Size+5",
+      walmart: "https://www.walmart.com/search?q=Wilson+Youth+Basketball+27.5+Size+5",
+      target: "https://www.target.com/s?searchTerm=Wilson+Youth+Basketball+27.5+Size+5",
     },
     {
-      name: "Wilson NCAA Youth",
+      name: "Spalding NBA Youth",
       tag: "Great value",
-      amazon: "https://www.amazon.com/s?k=Wilson+NCAA+Replica+Youth+Basketball+Size+5",
-      walmart: "https://www.walmart.com/search?q=Wilson+Youth+Basketball+Size+5",
-      target: "https://www.target.com/s?searchTerm=Wilson+Youth+Basketball+Size+5",
+      price: "~$20",
+      desc: "Official NBA youth rec ball. Rubber construction works indoors and outdoors.",
+      amazon: "https://www.amazon.com/s?k=Spalding+NBA+Youth+Basketball+Size+5+27.5",
+      walmart: "https://www.walmart.com/search?q=Spalding+NBA+Youth+Basketball+Size+5",
+      target: "https://www.target.com/s?searchTerm=Spalding+Youth+Basketball+Size+5",
     },
   ],
   3: [
     {
-      name: "Spalding Mini Basketball",
-      tag: "Best mini",
-      amazon: "https://www.amazon.com/s?k=Spalding+Mini+Basketball+Size+3",
-      walmart: "https://www.walmart.com/search?q=Mini+Basketball+Size+3",
-      target: "https://www.target.com/s?searchTerm=Mini+Basketball+Size+3",
+      name: "Wilson Mini Basketball",
+      tag: "Editor's Pick",
+      price: "~$15",
+      desc: "Soft rubber mini ball for ages 4–8. Lightweight design perfect for small hands.",
+      amazon: "https://www.amazon.com/s?k=Wilson+Mini+Basketball+Size+3+Youth+Beginner",
+      walmart: "https://www.walmart.com/search?q=Wilson+Mini+Basketball+Size+3",
+      target: "https://www.target.com/s?searchTerm=Wilson+Mini+Basketball+Size+3",
     },
     {
-      name: "Wilson Mini Basketball",
-      tag: "Soft grip",
-      amazon: "https://www.amazon.com/s?k=Wilson+Mini+Basketball+Size+3",
-      walmart: "https://www.walmart.com/search?q=Wilson+Mini+Basketball",
-      target: "https://www.target.com/s?searchTerm=Wilson+Mini+Basketball",
+      name: "Spalding Mini Basketball",
+      tag: "Great value",
+      price: "~$12",
+      desc: "Durable rubber construction for young beginners. A perfect first basketball.",
+      amazon: "https://www.amazon.com/s?k=Spalding+Mini+Basketball+Size+3+Youth",
+      walmart: "https://www.walmart.com/search?q=Mini+Basketball+Size+3+Spalding",
+      target: "https://www.target.com/s?searchTerm=Mini+Basketball+Size+3",
     },
   ],
 };
+
+// ─── Defaults ─────────────────────────────────────────────────────────────────
 
 const defaultProfile: UserProfile = {
   age: 16,
@@ -88,6 +106,54 @@ const defaultProfile: UserProfile = {
   position: "none",
   gender: "male",
 };
+
+// ─── Scroll-reveal hook ───────────────────────────────────────────────────────
+
+function useReveal() {
+  const ref = useRef<HTMLDivElement>(null);
+  const [visible, setVisible] = useState(false);
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    const obs = new IntersectionObserver(
+      ([entry]) => { if (entry.isIntersecting) { setVisible(true); obs.disconnect(); } },
+      { threshold: 0.08, rootMargin: "0px 0px -32px 0px" }
+    );
+    obs.observe(el);
+    return () => obs.disconnect();
+  }, []);
+  return { ref, visible };
+}
+
+function Reveal({ children, delay = 0, className = "" }: {
+  children: React.ReactNode; delay?: number; className?: string;
+}) {
+  const { ref, visible } = useReveal();
+  return (
+    <div ref={ref} className={className} style={{
+      opacity: visible ? 1 : 0,
+      transform: visible ? "translateY(0)" : "translateY(28px)",
+      transition: `opacity 0.65s ease ${delay}ms, transform 0.65s ease ${delay}ms`,
+    }}>
+      {children}
+    </div>
+  );
+}
+
+// ─── Inline markdown renderer ─────────────────────────────────────────────────
+
+function InlineText({ text, className }: { text: string; className?: string }) {
+  const parts = text.split(/\*\*(.*?)\*\*/g);
+  return (
+    <span className={className}>
+      {parts.map((part, i) =>
+        i % 2 === 1
+          ? <strong key={i} className="text-white font-semibold">{part}</strong>
+          : <span key={i}>{part}</span>
+      )}
+    </span>
+  );
+}
 
 // ─── Root page ────────────────────────────────────────────────────────────────
 
@@ -133,43 +199,46 @@ export default function Home() {
 
       {/* ── Hero ── */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden">
-        {/* Grid background */}
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            backgroundImage:
-              "linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.04) 1px, transparent 1px)",
-            backgroundSize: "72px 72px",
-          }}
-        />
-        {/* Radial glow */}
-        <div
-          className="absolute pointer-events-none"
-          style={{
-            width: 600,
-            height: 600,
-            borderRadius: "50%",
-            background: "radial-gradient(circle, rgba(255,255,255,0.06) 0%, transparent 70%)",
-            top: "50%",
-            left: "50%",
-            transform: "translate(-50%, -55%)",
-            filter: "blur(40px)",
-          }}
-        />
+        {/* Grid bg */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage:
+            "linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px), linear-gradient(to right, rgba(255,255,255,0.025) 1px, transparent 1px)",
+          backgroundSize: "64px 64px",
+        }} />
+
+        {/* Orange glow orb */}
+        <div className="absolute pointer-events-none animate-orb-1" style={{
+          width: 520, height: 520, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(249,115,22,0.14) 0%, transparent 65%)",
+          top: "8%", left: "calc(50% - 260px)",
+          filter: "blur(55px)",
+        }} />
+
+        {/* Secondary glow */}
+        <div className="absolute pointer-events-none animate-orb-2" style={{
+          width: 280, height: 280, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,200,80,0.06) 0%, transparent 70%)",
+          top: "45%", left: "15%",
+          filter: "blur(70px)",
+        }} />
 
         {/* 3D Ball */}
-        <div className="animate-float w-full max-w-sm">
-          <Suspense fallback={<div className="h-[340px]" />}>
+        <div className="animate-float w-full max-w-[280px] relative z-10">
+          <Suspense fallback={<div className="h-[320px]" />}>
             <Basketball3D size={ballSize} />
           </Suspense>
         </div>
 
         {/* Headline */}
-        <div className="relative z-10 text-center px-5 -mt-4">
+        <div className="relative z-10 text-center px-5 -mt-2">
+          <p className="text-xs uppercase tracking-[0.35em] font-semibold mb-3 animate-fade-up" style={{ color: "#F97316" }}>
+            AI-Powered · Free Forever
+          </p>
           <h1
-            className="text-7xl sm:text-8xl font-black tracking-tighter leading-none animate-fade-up"
+            className="font-display leading-[0.88] animate-fade-up-delay-1"
             style={{
-              background: "linear-gradient(180deg, #ffffff 0%, #999 45%, #ffffff 70%, #666 100%)",
+              fontSize: "clamp(84px, 16vw, 200px)",
+              background: "linear-gradient(180deg, #ffffff 0%, #d8d8d8 30%, #ffffff 60%, #999 100%)",
               WebkitBackgroundClip: "text",
               WebkitTextFillColor: "transparent",
               backgroundClip: "text",
@@ -177,21 +246,22 @@ export default function Home() {
           >
             BASKETFIT
           </h1>
-          <p className="mt-4 text-gray-400 text-lg sm:text-xl max-w-md mx-auto leading-relaxed animate-fade-up-delay-1">
-            AI-powered basketball size intelligence.<br className="hidden sm:block" />
-            Stop guessing. Start playing right.
+          <p className="mt-5 text-gray-500 text-base sm:text-lg max-w-sm mx-auto leading-relaxed animate-fade-up-delay-2">
+            Know your size before you buy.<br className="hidden sm:block" />
+            Powered by AI vision and smart fitting.
           </p>
-          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center animate-fade-up-delay-2">
+          <div className="mt-8 flex flex-col sm:flex-row gap-3 justify-center animate-fade-up-delay-3">
             <a
               href="#get-started"
-              className="px-8 py-4 rounded-2xl font-bold text-base tracking-wide text-black transition-opacity hover:opacity-80"
-              style={{ background: "linear-gradient(135deg, #fff 0%, #ccc 100%)" }}
+              className="px-8 py-4 rounded-2xl font-bold text-sm tracking-wide text-white transition-all hover:brightness-110 active:scale-95"
+              style={{ background: "linear-gradient(135deg, #F97316 0%, #C2410C 100%)" }}
             >
               Find My Size →
             </a>
             <a
               href="#how-it-works"
-              className="px-8 py-4 rounded-2xl font-semibold text-base tracking-wide border border-white/20 text-white hover:bg-white/5 transition-colors"
+              className="px-8 py-4 rounded-2xl font-semibold text-sm text-white hover:bg-white/5 transition-colors"
+              style={{ border: "1px solid rgba(255,255,255,0.12)" }}
             >
               How it works
             </a>
@@ -200,14 +270,14 @@ export default function Home() {
 
         {/* Scroll arrow */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-y">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.3)" strokeWidth="2" strokeLinecap="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.22)" strokeWidth="2" strokeLinecap="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
       </section>
 
       {/* ── Stats bar ── */}
-      <section className="border-y border-white/8 py-6">
+      <section className="py-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-3xl mx-auto px-5 grid grid-cols-2 sm:grid-cols-4 gap-6 text-center">
           {[
             { value: "4", label: "Ball Sizes" },
@@ -216,18 +286,8 @@ export default function Home() {
             { value: "Free", label: "Forever" },
           ].map((s) => (
             <div key={s.label}>
-              <p
-                className="text-3xl font-black"
-                style={{
-                  background: "linear-gradient(135deg, #fff 0%, #888 100%)",
-                  WebkitBackgroundClip: "text",
-                  WebkitTextFillColor: "transparent",
-                  backgroundClip: "text",
-                }}
-              >
-                {s.value}
-              </p>
-              <p className="text-gray-600 text-xs uppercase tracking-widest mt-1">{s.label}</p>
+              <p className="font-display text-4xl" style={{ color: "#F97316" }}>{s.value}</p>
+              <p className="text-xs uppercase tracking-widest mt-1" style={{ color: "rgba(255,255,255,0.25)" }}>{s.label}</p>
             </div>
           ))}
         </div>
@@ -236,113 +296,116 @@ export default function Home() {
       {/* ── Features ── */}
       <section className="py-24 px-5">
         <div className="max-w-4xl mx-auto">
-          <SectionLabel>What we do</SectionLabel>
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mt-3 mb-14">
-            Built different.<br />
-            <span style={{ background: "linear-gradient(135deg, #fff 0%, #666 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              Built for players.
-            </span>
-          </h2>
+          <Reveal>
+            <SectionLabel>What we do</SectionLabel>
+            <h2 className="font-display mt-3 mb-14" style={{ fontSize: "clamp(44px, 8vw, 88px)", lineHeight: 0.92 }}>
+              BUILT DIFFERENT.<br />
+              <span style={{ color: "#F97316" }}>BUILT FOR PLAYERS.</span>
+            </h2>
+          </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-            <FeatureCard
-              icon={<TargetIcon />}
-              title="Smart Fit Score"
-              desc="Our algorithm weighs age, height, hand span, experience and gender to generate a personalised 0–100 fit score mapped to the right size."
-            />
-            <FeatureCard
-              icon={<CameraIcon />}
-              title="AI Vision Measure"
-              desc="Point your camera at your hand and MiniMax M3 estimates your hand span instantly — no ruler needed."
-            />
-            <FeatureCard
-              icon={<BagIcon />}
-              title="Shop Ready"
-              desc="Every recommendation comes with direct links to Amazon, Walmart and Target so you can buy the right ball in seconds."
-            />
+            {[
+              {
+                icon: <TargetIcon />,
+                title: "Smart Fit Score",
+                desc: "Our algorithm weighs age, height, hand span, experience and gender to generate a personalised 0–100 fit score mapped to the right size.",
+              },
+              {
+                icon: <CameraIcon />,
+                title: "AI Vision Measure",
+                desc: "Point your camera at your hand with a ruler and MiniMax M3 estimates your hand span in seconds — no measuring tape needed.",
+              },
+              {
+                icon: <BagIcon />,
+                title: "Shop Ready",
+                desc: "Every recommendation links directly to Amazon, Walmart and Target with curated picks and estimated prices.",
+              },
+            ].map((card, i) => (
+              <Reveal key={card.title} delay={i * 90} className="h-full">
+                <FeatureCard icon={card.icon} title={card.title} desc={card.desc} />
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
 
       {/* ── How it works ── */}
-      <section id="how-it-works" className="py-24 px-5 border-t border-white/8">
+      <section id="how-it-works" className="py-24 px-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-4xl mx-auto">
-          <SectionLabel>The process</SectionLabel>
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mt-3 mb-14">
-            Three steps to your<br />
-            <span style={{ background: "linear-gradient(135deg, #fff 0%, #666 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              perfect ball.
-            </span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <Reveal>
+            <SectionLabel>The process</SectionLabel>
+            <h2 className="font-display mt-3 mb-14" style={{ fontSize: "clamp(44px, 8vw, 88px)", lineHeight: 0.92 }}>
+              THREE STEPS TO<br />
+              <span style={{ background: "linear-gradient(135deg, #fff 0%, #888 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                YOUR PERFECT BALL.
+              </span>
+            </h2>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
             {[
-              { n: "01", title: "Tell us about yourself", desc: "Enter your age, height, hand span and experience. Takes under 30 seconds." },
-              { n: "02", title: "Get your AI recommendation", desc: "Our model calculates your fit score and recommends the exact ball size and specific training tips." },
+              { n: "01", title: "Tell us about you", desc: "Enter your age, height, hand span and experience. Takes under 30 seconds." },
+              { n: "02", title: "Get your recommendation", desc: "Our AI calculates your fit score and recommends the exact size plus personalised coaching tips." },
               { n: "03", title: "Buy the right ball", desc: "Click through to Amazon, Walmart or Target and get playing with the correct size today." },
-            ].map((step) => (
-              <div key={step.n} className="flex flex-col gap-4">
-                <span
-                  className="text-6xl font-black leading-none"
-                  style={{ background: "linear-gradient(135deg, rgba(255,255,255,0.15) 0%, rgba(255,255,255,0.04) 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-                >
-                  {step.n}
-                </span>
-                <div>
-                  <h3 className="text-white font-bold text-lg mb-2">{step.title}</h3>
-                  <p className="text-gray-500 text-sm leading-relaxed">{step.desc}</p>
+            ].map((step, i) => (
+              <Reveal key={step.n} delay={i * 100}>
+                <div className="flex flex-col gap-3">
+                  <span className="font-display leading-none select-none" style={{ fontSize: 96, color: "#F97316", opacity: 0.22 }}>
+                    {step.n}
+                  </span>
+                  <h3 className="text-white font-semibold text-base -mt-2">{step.title}</h3>
+                  <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.35)" }}>{step.desc}</p>
                 </div>
-              </div>
+              </Reveal>
             ))}
           </div>
         </div>
       </section>
 
       {/* ── Size reference ── */}
-      <section className="py-24 px-5 border-t border-white/8">
+      <section className="py-24 px-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-4xl mx-auto">
-          <SectionLabel>The sizes</SectionLabel>
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mt-3 mb-14">
-            Know your<br />
-            <span style={{ background: "linear-gradient(135deg, #fff 0%, #666 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              options.
-            </span>
-          </h2>
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            {([3, 5, 6, 7] as BallSize[]).map((s) => {
+          <Reveal>
+            <SectionLabel>The sizes</SectionLabel>
+            <h2 className="font-display mt-3 mb-12" style={{ fontSize: "clamp(44px, 8vw, 88px)", lineHeight: 0.92 }}>
+              KNOW YOUR<br />
+              <span style={{ background: "linear-gradient(135deg, #fff 0%, #888 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+                OPTIONS.
+              </span>
+            </h2>
+          </Reveal>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+            {([7, 6, 5, 3] as BallSize[]).map((s, i) => {
               const info = BALL_SIZE_INFO[s];
               return (
-                <div
-                  key={s}
-                  className="flex items-start gap-5 p-5 rounded-2xl border border-white/8"
-                  style={{ background: "rgba(255,255,255,0.02)" }}
-                >
-                  <div
-                    className="w-14 h-14 rounded-full flex items-center justify-center font-black text-lg shrink-0 text-black"
-                    style={{ background: "linear-gradient(135deg, #fff 0%, #aaa 100%)" }}
-                  >
-                    {s}
+                <Reveal key={s} delay={i * 70}>
+                  <div className="flex items-start gap-4 p-5 rounded-2xl" style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-display text-xl shrink-0 text-black"
+                      style={{ background: "linear-gradient(135deg, #F97316 0%, #C2410C 100%)" }}>
+                      {s}
+                    </div>
+                    <div>
+                      <p className="text-white font-semibold text-sm">{info.label}</p>
+                      <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>{info.circumference} · {info.weight}</p>
+                      <p className="text-xs mt-1 leading-relaxed" style={{ color: "rgba(255,255,255,0.22)" }}>{info.audience}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-white font-bold">{info.label}</p>
-                    <p className="text-gray-500 text-sm mt-0.5">{info.circumference} · {info.weight}</p>
-                    <p className="text-gray-600 text-xs mt-1">{info.audience}</p>
-                  </div>
-                </div>
+                </Reveal>
               );
             })}
           </div>
         </div>
       </section>
 
-      {/* ── App form ── */}
-      <section id="get-started" className="py-24 px-5 border-t border-white/8">
+      {/* ── Form ── */}
+      <section id="get-started" className="py-24 px-5" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
         <div className="max-w-md mx-auto">
-          <SectionLabel>Get started</SectionLabel>
-          <h2 className="text-4xl sm:text-5xl font-black tracking-tight mt-3 mb-10">
-            Find your<br />
-            <span style={{ background: "linear-gradient(135deg, #fff 0%, #666 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
-              perfect size.
-            </span>
-          </h2>
+          <Reveal>
+            <SectionLabel>Get started</SectionLabel>
+            <h2 className="font-display mt-3 mb-10" style={{ fontSize: "clamp(52px, 10vw, 108px)", lineHeight: 0.9 }}>
+              FIND YOUR<br />
+              <span style={{ color: "#F97316" }}>PERFECT SIZE.</span>
+            </h2>
+          </Reveal>
 
           <form onSubmit={handleSubmit} className="space-y-5">
             <div className="grid grid-cols-2 gap-3">
@@ -353,7 +416,7 @@ export default function Home() {
             <HandSpanInput value={profile.handSpanCm} onChange={(v) => set("handSpanCm", v)} />
 
             <div>
-              <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Experience</label>
+              <label className="block text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(255,255,255,0.35)" }}>Experience</label>
               <SegmentedControl
                 options={["beginner", "intermediate", "advanced"]}
                 labels={["Beginner", "Intermediate", "Advanced"]}
@@ -363,7 +426,7 @@ export default function Home() {
             </div>
 
             <div>
-              <label className="block text-xs uppercase tracking-widest text-gray-500 mb-2">Gender</label>
+              <label className="block text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(255,255,255,0.35)" }}>Gender</label>
               <SegmentedControl
                 options={["male", "female", "other"]}
                 labels={["Male", "Female", "Other"]}
@@ -375,16 +438,17 @@ export default function Home() {
             <button
               type="submit"
               disabled={loading}
-              className="w-full py-4 rounded-2xl font-bold text-base tracking-widest uppercase disabled:opacity-40 disabled:cursor-not-allowed transition-all"
+              className="w-full py-4 rounded-2xl font-bold text-sm tracking-widest uppercase transition-all active:scale-95"
               style={{
-                background: loading ? "#222" : "linear-gradient(135deg, #ffffff 0%, #cccccc 50%, #ffffff 100%)",
-                color: loading ? "#555" : "#000",
+                background: loading ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg, #F97316 0%, #C2410C 100%)",
+                color: loading ? "rgba(255,255,255,0.3)" : "#fff",
+                cursor: loading ? "not-allowed" : "pointer",
               }}
             >
               {loading ? "Analysing…" : "Get My Size →"}
             </button>
 
-            {error && <p className="text-red-500 text-sm text-center">{error}</p>}
+            {error && <p className="text-red-400 text-sm text-center">{error}</p>}
           </form>
         </div>
       </section>
@@ -399,19 +463,11 @@ export default function Home() {
       )}
 
       {/* ── Footer ── */}
-      <footer className="border-t border-white/8 py-10 px-5 text-center">
-        <p
-          className="text-2xl font-black tracking-tighter"
-          style={{
-            background: "linear-gradient(135deg, #fff 0%, #555 100%)",
-            WebkitBackgroundClip: "text",
-            WebkitTextFillColor: "transparent",
-            backgroundClip: "text",
-          }}
-        >
-          BASKETFIT
+      <footer className="py-10 px-5 text-center" style={{ borderTop: "1px solid rgba(255,255,255,0.06)" }}>
+        <p className="font-display text-3xl" style={{ color: "#F97316" }}>BASKETFIT</p>
+        <p className="text-xs uppercase tracking-widest mt-2" style={{ color: "rgba(255,255,255,0.2)" }}>
+          AI Basketball Size Recommender · {new Date().getFullYear()}
         </p>
-        <p className="text-gray-700 text-xs mt-2">AI Basketball Size Recommender · {new Date().getFullYear()}</p>
       </footer>
     </>
   );
@@ -421,14 +477,17 @@ export default function Home() {
 
 function Nav() {
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4" style={{ backdropFilter: "blur(16px)", background: "rgba(0,0,0,0.7)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
-      <span className="font-black text-lg tracking-tighter" style={{ background: "linear-gradient(135deg, #fff 0%, #888 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}>
+    <nav
+      className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-5 py-4"
+      style={{ backdropFilter: "blur(16px)", background: "rgba(0,0,0,0.75)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}
+    >
+      <span className="font-display text-xl" style={{ color: "#F97316", letterSpacing: "0.05em" }}>
         🏀 BASKETFIT
       </span>
       <a
         href="#get-started"
-        className="px-4 py-2 rounded-xl text-sm font-bold text-black transition-opacity hover:opacity-80"
-        style={{ background: "linear-gradient(135deg, #fff 0%, #ccc 100%)" }}
+        className="px-4 py-2 rounded-xl text-sm font-bold text-white transition-all hover:brightness-110 active:scale-95"
+        style={{ background: "linear-gradient(135deg, #F97316 0%, #C2410C 100%)" }}
       >
         Get Started →
       </a>
@@ -440,7 +499,7 @@ function Nav() {
 
 function SectionLabel({ children }: { children: React.ReactNode }) {
   return (
-    <p className="text-xs uppercase tracking-widest font-semibold" style={{ color: "rgba(255,255,255,0.3)" }}>
+    <p className="text-xs uppercase tracking-[0.3em] font-semibold" style={{ color: "rgba(249,115,22,0.6)" }}>
       {children}
     </p>
   );
@@ -451,15 +510,18 @@ function SectionLabel({ children }: { children: React.ReactNode }) {
 function FeatureCard({ icon, title, desc }: { icon: React.ReactNode; title: string; desc: string }) {
   return (
     <div
-      className="rounded-2xl p-6 flex flex-col gap-4 border border-white/8 hover:border-white/16 transition-colors"
-      style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(8px)" }}
+      className="rounded-2xl p-6 flex flex-col gap-4 h-full transition-colors"
+      style={{ background: "rgba(255,255,255,0.025)", border: "1px solid rgba(255,255,255,0.07)" }}
     >
-      <div className="w-10 h-10 rounded-xl flex items-center justify-center" style={{ background: "rgba(255,255,255,0.08)" }}>
+      <div
+        className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
+        style={{ background: "rgba(249,115,22,0.12)", border: "1px solid rgba(249,115,22,0.2)" }}
+      >
         {icon}
       </div>
       <div>
-        <h3 className="text-white font-bold text-base mb-1.5">{title}</h3>
-        <p className="text-gray-500 text-sm leading-relaxed">{desc}</p>
+        <h3 className="text-white font-semibold text-base mb-2">{title}</h3>
+        <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.4)" }}>{desc}</p>
       </div>
     </div>
   );
@@ -469,7 +531,7 @@ function FeatureCard({ icon, title, desc }: { icon: React.ReactNode; title: stri
 
 function TargetIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round">
       <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
     </svg>
   );
@@ -477,7 +539,7 @@ function TargetIcon() {
 
 function CameraIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round">
       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
       <circle cx="12" cy="13" r="4" />
     </svg>
@@ -486,8 +548,16 @@ function CameraIcon() {
 
 function BagIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.7)" strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round">
       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" />
+    </svg>
+  );
+}
+
+function CoachIcon() {
+  return (
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round">
+      <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
     </svg>
   );
 }
@@ -499,46 +569,96 @@ function ResultCard({ result }: { result: Recommendation }) {
   const picks = BALL_PICKS[result.primarySize];
 
   return (
-    <div className="rounded-2xl overflow-hidden border border-white/10">
-      <div className="p-6" style={{ background: "linear-gradient(135deg, #1a1a1a 0%, #2e2e2e 50%, #111 100%)" }}>
-        <p className="text-xs uppercase tracking-widest text-gray-500 mb-1">Your Size</p>
-        <h2
-          className="text-5xl font-black tracking-tight"
-          style={{ background: "linear-gradient(180deg, #ffffff 0%, #aaaaaa 50%, #ffffff 100%)", WebkitBackgroundClip: "text", WebkitTextFillColor: "transparent", backgroundClip: "text" }}
-        >
-          {info.label}
-        </h2>
-        <p className="text-gray-500 text-sm mt-1">{info.circumference} circumference · {info.weight}</p>
-        <div className="mt-4">
-          <div className="h-1.5 w-full bg-white/10 rounded-full overflow-hidden">
-            <div className="h-full rounded-full transition-all duration-700" style={{ width: `${result.score}%`, background: "linear-gradient(90deg, #555 0%, #ffffff 100%)" }} />
+    <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(249,115,22,0.25)", background: "#0a0a0a" }}>
+      {/* Header */}
+      <div className="relative p-6 overflow-hidden" style={{ background: "linear-gradient(135deg, #111 0%, #1c0900 60%, #111 100%)" }}>
+        {/* Ghost size number */}
+        <div className="absolute right-2 top-1/2 -translate-y-1/2 font-display leading-none pointer-events-none select-none"
+          style={{ fontSize: 140, color: "#F97316", opacity: 0.07 }}>
+          {result.primarySize}
+        </div>
+
+        <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(249,115,22,0.55)" }}>
+          Your Recommended Size
+        </p>
+        <div className="flex items-center gap-3">
+          <span className="font-display leading-none" style={{ fontSize: 80, color: "#F97316" }}>
+            {result.primarySize}
+          </span>
+          <div>
+            <p className="text-white font-bold text-lg leading-tight">{info.label}</p>
+            <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.35)" }}>
+              {info.circumference} circumference · {info.weight}
+            </p>
           </div>
-          <p className="text-right text-xs text-gray-600 mt-1">Fit score {result.score}/100</p>
+        </div>
+
+        {/* Score bar */}
+        <div className="mt-5">
+          <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+            <div
+              className="h-full rounded-full animate-score"
+              style={{ width: `${result.score}%`, background: "linear-gradient(90deg, #EA580C 0%, #FBBF24 100%)" }}
+            />
+          </div>
+          <div className="flex justify-between mt-1.5">
+            <p className="text-xs" style={{ color: "rgba(255,255,255,0.25)" }}>Fit Score</p>
+            <p className="text-xs font-bold" style={{ color: "#F97316" }}>{result.score}/100</p>
+          </div>
         </div>
       </div>
 
-      <div className="p-5 space-y-5 bg-[#0a0a0a]">
-        <Block title="Why this size"><p className="text-gray-400 text-sm leading-relaxed">{result.explanation}</p></Block>
+      {/* Body */}
+      <div className="p-5 space-y-6">
+        <Block title="Why this size">
+          <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+            <InlineText text={result.explanation} />
+          </p>
+        </Block>
+
         {result.trainingSize && (
           <Block title="Training tip">
-            <p className="text-gray-400 text-sm leading-relaxed">
-              Use a <span className="text-white font-semibold">{BALL_SIZE_INFO[result.trainingSize].label}</span> for skill drills. The tighter grip builds better finger-pad control.
+            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.5)" }}>
+              Use a{" "}
+              <span className="text-white font-semibold">{BALL_SIZE_INFO[result.trainingSize].label}</span>
+              {" "}for skill drills. The tighter grip builds better finger-pad control.
             </p>
           </Block>
         )}
+
         <Block title="AI Coach">
-          <p className="text-gray-400 text-sm leading-relaxed italic border-l border-white/20 pl-3">{result.aiCoachMessage}</p>
+          <CoachMessage text={result.aiCoachMessage} />
         </Block>
+
         <Block title="Shop this size">
           <div className="space-y-3">
-            {picks.map((pick) => (
-              <div key={pick.name} className="rounded-xl border border-white/10 bg-white/[0.03] p-3">
-                <div className="flex items-baseline justify-between mb-2">
+            {picks.map((pick, i) => (
+              <div
+                key={pick.name}
+                className="rounded-2xl p-4"
+                style={{
+                  background: i === 0 ? "rgba(249,115,22,0.05)" : "rgba(255,255,255,0.02)",
+                  border: i === 0 ? "1px solid rgba(249,115,22,0.22)" : "1px solid rgba(255,255,255,0.07)",
+                }}
+              >
+                <div className="flex items-start justify-between gap-2 mb-1">
                   <p className="text-white text-sm font-semibold">{pick.name}</p>
-                  <span className="text-xs text-gray-600 bg-white/5 px-2 py-0.5 rounded-full">{pick.tag}</span>
+                  <div className="flex items-center gap-2 shrink-0">
+                    <span
+                      className="text-[10px] font-bold px-2 py-0.5 rounded-full whitespace-nowrap"
+                      style={i === 0
+                        ? { background: "rgba(249,115,22,0.15)", color: "#F97316", border: "1px solid rgba(249,115,22,0.3)" }
+                        : { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.35)", border: "1px solid rgba(255,255,255,0.1)" }
+                      }
+                    >
+                      {i === 0 ? "★ " : ""}{pick.tag}
+                    </span>
+                    <span className="text-xs font-bold text-white whitespace-nowrap">{pick.price}</span>
+                  </div>
                 </div>
+                <p className="text-xs mb-3 leading-relaxed" style={{ color: "rgba(255,255,255,0.3)" }}>{pick.desc}</p>
                 <div className="flex gap-2">
-                  <ShopLink href={pick.amazon} label="Amazon" color="#F90" />
+                  <ShopLink href={pick.amazon} label="Amazon" color="#FF9900" />
                   <ShopLink href={pick.walmart} label="Walmart" color="#0071CE" />
                   <ShopLink href={pick.target} label="Target" color="#CC0000" />
                 </div>
@@ -551,11 +671,39 @@ function ResultCard({ result }: { result: Recommendation }) {
   );
 }
 
+// ─── Coach message renderer ───────────────────────────────────────────────────
+
+function CoachMessage({ text }: { text: string }) {
+  if (!text) return null;
+  const parts = text.trim().split(/\*\*(.*?)\*\*/g);
+
+  return (
+    <div className="p-4 rounded-2xl" style={{
+      background: "linear-gradient(135deg, rgba(249,115,22,0.07) 0%, rgba(0,0,0,0) 100%)",
+      border: "1px solid rgba(249,115,22,0.18)",
+    }}>
+      <div className="flex gap-3">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(249,115,22,0.15)" }}>
+          <CoachIcon />
+        </div>
+        <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.65)" }}>
+          {parts.map((p, i) =>
+            i % 2 === 1 ? <strong key={i} className="text-white font-semibold">{p}</strong> : <span key={i}>{p}</span>
+          )}
+        </p>
+      </div>
+    </div>
+  );
+}
+
 function ShopLink({ href, label, color }: { href: string; label: string; color: string }) {
   return (
-    <a href={href} target="_blank" rel="noopener noreferrer"
-      className="flex-1 py-1.5 rounded-lg text-xs font-bold text-center transition-opacity hover:opacity-80"
-      style={{ background: color + "22", color, border: `1px solid ${color}44` }}
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      className="flex-1 py-2 rounded-xl text-xs font-bold text-center transition-opacity hover:opacity-80"
+      style={{ background: color + "18", color, border: `1px solid ${color}35` }}
     >
       {label}
     </a>
@@ -565,7 +713,7 @@ function ShopLink({ href, label, color }: { href: string; label: string; color: 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest text-gray-600 mb-2">{title}</p>
+      <p className="text-xs uppercase tracking-widest mb-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.22)" }}>{title}</p>
       {children}
     </div>
   );
@@ -581,8 +729,11 @@ function NumInput({ label, unit, min, max, step = 1, value, onChange }: {
 
   return (
     <div>
-      <label className="block text-xs uppercase tracking-widest text-gray-500 mb-1.5">{label}</label>
-      <div className="flex items-center gap-2 bg-white/[0.05] border border-white/10 rounded-xl px-3 py-3 focus-within:border-white/30 transition-colors">
+      <label className="block text-xs uppercase tracking-widest mb-1.5" style={{ color: "rgba(255,255,255,0.35)" }}>{label}</label>
+      <div
+        className="flex items-center gap-2 rounded-xl px-3 py-3 transition-colors focus-within:border-orange-500/40"
+        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}
+      >
         <input
           type="text"
           inputMode="decimal"
@@ -600,7 +751,7 @@ function NumInput({ label, unit, min, max, step = 1, value, onChange }: {
           className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0"
           required
         />
-        <span className="text-gray-600 text-xs uppercase tracking-widest shrink-0">{unit}</span>
+        <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.25)" }}>{unit}</span>
       </div>
     </div>
   );
@@ -652,11 +803,14 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
   return (
     <div>
       <div className="flex items-center justify-between mb-1.5">
-        <label className="text-xs uppercase tracking-widest text-gray-500">Hand Span</label>
-        <span className="text-xs text-gray-600">Thumb tip → pinky tip, fully spread</span>
+        <label className="text-xs uppercase tracking-widest" style={{ color: "rgba(255,255,255,0.35)" }}>Hand Span</label>
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>Thumb tip → pinky tip, fully spread</span>
       </div>
       <div className="flex gap-2">
-        <div className="flex-1 flex items-center gap-2 bg-white/[0.05] border border-white/10 rounded-xl px-3 py-3 focus-within:border-white/30 transition-colors">
+        <div
+          className="flex-1 flex items-center gap-2 rounded-xl px-3 py-3 transition-colors"
+          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.1)" }}
+        >
           <input
             type="text" inputMode="decimal" value={raw}
             onChange={(e) => {
@@ -665,54 +819,85 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
               if (!isNaN(n) && n >= 10 && n <= 35) { onChange(n); clearPhoto(); }
             }}
             onBlur={() => { const n = parseFloat(raw); if (isNaN(n) || n < 10 || n > 35) setRaw(String(value)); }}
-            className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0" required
+            className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0"
+            required
           />
-          <span className="text-gray-600 text-xs uppercase tracking-widest shrink-0">cm</span>
+          <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.25)" }}>cm</span>
         </div>
-        <button type="button" onClick={() => fileRef.current?.click()} disabled={scanning} title="Measure with AI camera"
-          className="w-14 flex items-center justify-center rounded-xl border border-white/10 bg-white/[0.05] hover:bg-white/10 disabled:opacity-40 transition-colors">
-          {scanning ? <Spinner /> : <CameraIcon />}
+        <button
+          type="button"
+          onClick={() => fileRef.current?.click()}
+          disabled={scanning}
+          title="Measure with AI camera"
+          className="w-14 flex items-center justify-center rounded-xl transition-colors disabled:opacity-40 hover:brightness-110"
+          style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}
+        >
+          {scanning ? <Spinner /> : <CameraIconOrange />}
         </button>
-        <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden"
-          onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }} />
+        <input
+          ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden"
+          onChange={(e) => { const f = e.target.files?.[0]; if (f) handleFile(f); }}
+        />
       </div>
 
       {preview && (
-        <div className="mt-3 rounded-xl overflow-hidden border border-white/10 relative">
+        <div className="mt-3 rounded-xl overflow-hidden relative" style={{ border: "1px solid rgba(255,255,255,0.1)" }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview} alt="Hand" className="w-full max-h-48 object-cover" />
           {scanning && (
-            <div className="absolute inset-0 bg-black/60 flex flex-col items-center justify-center gap-2">
-              <Spinner large /><p className="text-white text-xs tracking-widest uppercase">AI measuring…</p>
+            <div className="absolute inset-0 bg-black/65 flex flex-col items-center justify-center gap-2">
+              <Spinner large />
+              <p className="text-white text-xs tracking-widest uppercase">AI measuring…</p>
             </div>
           )}
           {!scanning && (
-            <button type="button" onClick={clearPhoto}
-              className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center text-gray-400 hover:text-white">✕</button>
+            <button
+              type="button"
+              onClick={clearPhoto}
+              className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center text-gray-400 hover:text-white text-xs"
+            >
+              ✕
+            </button>
           )}
         </div>
       )}
 
       {aiResult !== null && !scanning && (
         <div className="mt-2 flex items-center gap-1.5">
-          <span className="text-xs text-gray-500">AI measured:</span>
-          <span className="text-xs font-bold px-2 py-0.5 rounded-full" style={{ background: "linear-gradient(90deg,#222,#333)", border: "1px solid rgba(255,255,255,0.15)", color: "#fff" }}>
+          <span className="text-xs" style={{ color: "rgba(255,255,255,0.35)" }}>AI measured:</span>
+          <span
+            className="text-xs font-bold px-2 py-0.5 rounded-full"
+            style={{ background: "rgba(249,115,22,0.12)", color: "#F97316", border: "1px solid rgba(249,115,22,0.25)" }}
+          >
             {aiResult} cm
           </span>
-          <span className="text-xs text-gray-600">· tap to adjust</span>
+          <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>· tap to adjust</span>
         </div>
       )}
-      {visionError && !scanning && <p className="mt-1.5 text-xs text-red-500">{visionError}</p>}
-      {!preview && <p className="mt-1.5 text-xs text-gray-700">Tip: lay a ruler beside your hand for the most accurate AI measurement</p>}
+      {visionError && !scanning && <p className="mt-1.5 text-xs text-red-400">{visionError}</p>}
+      {!preview && (
+        <p className="mt-1.5 text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>
+          Tip: lay a ruler beside your hand for the most accurate AI measurement
+        </p>
+      )}
     </div>
+  );
+}
+
+function CameraIconOrange() {
+  return (
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round">
+      <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
+      <circle cx="12" cy="13" r="4" />
+    </svg>
   );
 }
 
 function Spinner({ large = false }: { large?: boolean }) {
   const s = large ? 24 : 16;
   return (
-    <svg width={s} height={s} viewBox="0 0 24 24" className="animate-spin text-gray-300">
-      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2" strokeDasharray="40" strokeDashoffset="10" />
+    <svg width={s} height={s} viewBox="0 0 24 24" className="animate-spin" style={{ color: "#F97316" }}>
+      <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="40" strokeDashoffset="10" />
     </svg>
   );
 }
@@ -739,11 +924,22 @@ function SegmentedControl({ options, labels, value, onChange }: {
   options: string[]; labels: string[]; value: string; onChange: (v: string) => void;
 }) {
   return (
-    <div className="flex gap-1 bg-white/[0.04] border border-white/10 rounded-xl p-1">
+    <div
+      className="flex gap-1 p-1 rounded-xl"
+      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.08)" }}
+    >
       {options.map((opt, i) => (
-        <button key={opt} type="button" onClick={() => onChange(opt)}
+        <button
+          key={opt}
+          type="button"
+          onClick={() => onChange(opt)}
           className="flex-1 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all"
-          style={value === opt ? { background: "linear-gradient(135deg,#fff 0%,#ccc 100%)", color: "#000" } : { color: "#555" }}>
+          style={
+            value === opt
+              ? { background: "linear-gradient(135deg, #F97316 0%, #C2410C 100%)", color: "#fff" }
+              : { color: "rgba(255,255,255,0.3)" }
+          }
+        >
           {labels[i]}
         </button>
       ))}

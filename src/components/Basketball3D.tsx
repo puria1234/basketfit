@@ -19,7 +19,6 @@ function BasketballMesh({ size }: { size: BallSize }) {
 
   useFrame((_, dt) => {
     group.current.rotation.y += dt * 0.55;
-    // Smooth scale lerp when size changes
     const target = SIZE_SCALE[size];
     currentScale.current += (target - currentScale.current) * Math.min(1, dt * 4);
     group.current.scale.setScalar(currentScale.current);
@@ -33,15 +32,17 @@ function BasketballMesh({ size }: { size: BallSize }) {
     canvas.height = h;
     const ctx = canvas.getContext("2d")!;
 
-    const bg = ctx.createRadialGradient(w * 0.4, h * 0.35, 0, w * 0.5, h * 0.5, w * 0.55);
-    bg.addColorStop(0, "#ffffff");
-    bg.addColorStop(0.5, "#d0d0d0");
-    bg.addColorStop(1, "#888888");
+    // Orange basketball gradient
+    const bg = ctx.createRadialGradient(w * 0.38, h * 0.3, 0, w * 0.5, h * 0.5, w * 0.56);
+    bg.addColorStop(0, "#FF9A3C");
+    bg.addColorStop(0.28, "#E85C00");
+    bg.addColorStop(0.62, "#BF4000");
+    bg.addColorStop(1, "#6B1F00");
     ctx.fillStyle = bg;
     ctx.fillRect(0, 0, w, h);
 
-    ctx.strokeStyle = "#111111";
-    ctx.lineWidth = 11;
+    ctx.strokeStyle = "#1A0500";
+    ctx.lineWidth = 13;
     ctx.lineCap = "round";
 
     // Equator
@@ -78,7 +79,7 @@ function BasketballMesh({ size }: { size: BallSize }) {
     <group ref={group} rotation={[0.25, 0, 0]}>
       <mesh>
         <sphereGeometry args={[1.6, 64, 64]} />
-        <meshStandardMaterial map={texture} roughness={0.25} metalness={0.08} />
+        <meshStandardMaterial map={texture} roughness={0.45} metalness={0.02} />
       </mesh>
     </group>
   );
@@ -86,12 +87,12 @@ function BasketballMesh({ size }: { size: BallSize }) {
 
 export default function Basketball3D({ size = 7 }: { size?: BallSize }) {
   return (
-    <div style={{ width: "100%", height: 340 }}>
+    <div style={{ width: "100%", height: 320 }}>
       <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
-        <ambientLight intensity={0.6} />
-        <pointLight position={[4, 4, 4]} intensity={2.5} color="#ffffff" />
-        <pointLight position={[-3, -2, 3]} intensity={0.8} color="#ccccff" />
-        <pointLight position={[0, -4, 1]} intensity={0.4} color="#ffffff" />
+        <ambientLight intensity={0.5} />
+        <pointLight position={[4, 5, 4]} intensity={3} color="#ffffff" />
+        <pointLight position={[-3, -2, 3]} intensity={1} color="#FFD580" />
+        <pointLight position={[0, -4, 1]} intensity={0.3} color="#FF6B00" />
         <BasketballMesh size={size} />
       </Canvas>
     </div>

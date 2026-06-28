@@ -8,6 +8,23 @@ import { Logo } from "@/components/Logo";
 
 const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: false });
 
+// ─── Palette ──────────────────────────────────────────────────────────────────
+
+const C = {
+  orange:   "#FF5722",
+  orangeLt: "#FF7D53",
+  cyan:     "#06B6D4",
+  cyanDim:  "rgba(6,182,212,0.10)",
+  cyanBdr:  "rgba(6,182,212,0.18)",
+  lime:     "#84CC16",
+  text:     "#F0F4F8",
+  muted:    "rgba(240,244,248,0.37)",
+  surface:  "rgba(255,255,255,0.03)",
+  surfBdr:  "rgba(255,255,255,0.07)",
+  bg:       "#0C1220",
+  navy:     "#111827",
+};
+
 // ─── Product data ────────────────────────────────────────────────────────────
 
 const BALL_PICKS: Record<
@@ -147,16 +164,26 @@ export default function AppPage() {
   const ballSize = (result?.primarySize ?? 7) as BallSize;
 
   return (
-    <>
-      {/* App nav */}
+    <div style={{ background: C.bg, minHeight: "100vh" }}>
+      {/* Ambient orbs */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
+        <div className="animate-orb-a absolute rounded-full"
+          style={{ width: 520, height: 520, top: -120, right: -100,
+            background: `radial-gradient(circle, ${C.orange}22 0%, transparent 70%)` }} />
+        <div className="animate-orb-b absolute rounded-full"
+          style={{ width: 400, height: 400, bottom: 100, left: -80,
+            background: `radial-gradient(circle, ${C.cyan}18 0%, transparent 70%)` }} />
+      </div>
+
+      {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
-        style={{ backdropFilter: "blur(20px)", background: "rgba(0,0,0,0.72)", borderBottom: "1px solid rgba(255,255,255,0.06)" }}>
+        style={{ backdropFilter: "blur(20px)", background: "rgba(12,18,32,0.82)", borderBottom: `1px solid ${C.cyanBdr}` }}>
         <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <Logo size={26} />
-          <span className="font-display font-bold text-base tracking-wide text-white">BasketFit</span>
+          <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
         </a>
         <a href="/" className="text-sm font-medium flex items-center gap-1.5 transition-opacity hover:opacity-70"
-          style={{ color: "rgba(255,255,255,0.45)" }}>
+          style={{ color: C.muted }}>
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round">
             <path d="M19 12H5M12 19l-7-7 7-7" />
           </svg>
@@ -165,7 +192,7 @@ export default function AppPage() {
       </nav>
 
       {/* Main content */}
-      <main className="pt-20 pb-24 px-5">
+      <main className="relative pt-20 pb-24 px-5" style={{ zIndex: 1 }}>
         <div className="max-w-md mx-auto">
 
           {/* Ball + heading */}
@@ -175,11 +202,11 @@ export default function AppPage() {
                 <Basketball3D size={ballSize} />
               </Suspense>
             </div>
-            <h1 className="font-display font-extrabold mt-2" style={{ fontSize: "clamp(42px, 10vw, 72px)", lineHeight: 1.0 }}>
+            <h1 className="font-display font-extrabold mt-2" style={{ fontSize: "clamp(42px, 10vw, 72px)", lineHeight: 1.0, color: C.text }}>
               Find Your<br />
-              <span style={{ color: "#F97316" }}>Perfect Size.</span>
+              <span style={{ color: C.orange }}>Perfect Size.</span>
             </h1>
-            <p className="mt-3 text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.38)" }}>
+            <p className="mt-3 text-sm leading-relaxed" style={{ color: C.muted }}>
               Enter your details below. Takes under 30 seconds.
             </p>
           </div>
@@ -218,9 +245,12 @@ export default function AppPage() {
               disabled={loading}
               className="w-full py-4 rounded-2xl font-semibold text-sm tracking-widest uppercase transition-all active:scale-95"
               style={{
-                background: loading ? "rgba(255,255,255,0.05)" : "linear-gradient(135deg, #F97316 0%, #C2410C 100%)",
-                color: loading ? "rgba(255,255,255,0.3)" : "#fff",
+                background: loading
+                  ? "rgba(255,255,255,0.05)"
+                  : `linear-gradient(135deg, ${C.orange} 0%, #C2320C 100%)`,
+                color: loading ? C.muted : "#fff",
                 cursor: loading ? "not-allowed" : "pointer",
+                boxShadow: loading ? "none" : `0 0 32px ${C.orange}44`,
               }}
             >
               {loading ? "Analysing..." : "Get My Size"}
@@ -237,7 +267,7 @@ export default function AppPage() {
           )}
         </div>
       </main>
-    </>
+    </div>
   );
 }
 
@@ -248,24 +278,26 @@ function ResultCard({ result }: { result: Recommendation }) {
   const picks = BALL_PICKS[result.primarySize];
 
   return (
-    <div className="rounded-3xl overflow-hidden" style={{ border: "1px solid rgba(249,115,22,0.25)", background: "#0a0a0a" }}>
+    <div className="rounded-3xl overflow-hidden"
+      style={{ border: `1px solid ${C.cyanBdr}`, background: "#0E1627" }}>
       {/* Header */}
-      <div className="relative p-6 overflow-hidden" style={{ background: "linear-gradient(135deg, #111 0%, #1c0a00 60%, #111 100%)" }}>
+      <div className="relative p-6 overflow-hidden"
+        style={{ background: `linear-gradient(135deg, #0E1627 0%, #1A0E08 60%, #0E1627 100%)` }}>
         <div className="absolute right-3 top-1/2 -translate-y-1/2 font-display font-bold leading-none pointer-events-none select-none"
-          style={{ fontSize: 130, color: "#F97316", opacity: 0.07 }}>
+          style={{ fontSize: 130, color: C.orange, opacity: 0.06 }}>
           {result.primarySize}
         </div>
 
-        <p className="text-xs uppercase tracking-widest mb-2" style={{ color: "rgba(249,115,22,0.55)" }}>
+        <p className="text-xs uppercase tracking-widest mb-2" style={{ color: `${C.orange}88` }}>
           Your Recommended Size
         </p>
         <div className="flex items-center gap-3">
-          <span className="font-display font-bold leading-none" style={{ fontSize: 76, color: "#F97316" }}>
+          <span className="font-display font-bold leading-none" style={{ fontSize: 76, color: C.orange }}>
             {result.primarySize}
           </span>
           <div>
-            <p className="text-white font-semibold text-lg leading-tight">{info.label}</p>
-            <p className="text-xs mt-0.5" style={{ color: "rgba(255,255,255,0.33)" }}>
+            <p className="font-semibold text-lg leading-tight" style={{ color: C.text }}>{info.label}</p>
+            <p className="text-xs mt-0.5" style={{ color: C.muted }}>
               {info.circumference} circumference · {info.weight}
             </p>
           </div>
@@ -274,11 +306,11 @@ function ResultCard({ result }: { result: Recommendation }) {
         <div className="mt-5">
           <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
             <div className="h-full rounded-full animate-score"
-              style={{ width: `${result.score}%`, background: "linear-gradient(90deg, #EA580C 0%, #FBBF24 100%)" }} />
+              style={{ width: `${result.score}%`, background: `linear-gradient(90deg, ${C.orange} 0%, ${C.cyan} 100%)` }} />
           </div>
           <div className="flex justify-between mt-1.5">
             <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)" }}>Fit Score</p>
-            <p className="text-xs font-semibold" style={{ color: "#F97316" }}>{result.score}/100</p>
+            <p className="text-xs font-semibold" style={{ color: C.cyan }}>{result.score}/100</p>
           </div>
         </div>
       </div>
@@ -286,16 +318,16 @@ function ResultCard({ result }: { result: Recommendation }) {
       {/* Body */}
       <div className="p-5 space-y-6">
         <Block title="Why this size">
-          <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
+          <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
             <InlineText text={result.explanation} />
           </p>
         </Block>
 
         {result.trainingSize && (
           <Block title="Training tip">
-            <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.48)" }}>
+            <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
               Use a{" "}
-              <span className="text-white font-semibold">{BALL_SIZE_INFO[result.trainingSize].label}</span>
+              <span className="font-semibold" style={{ color: C.text }}>{BALL_SIZE_INFO[result.trainingSize].label}</span>
               {" "}for skill drills. The tighter grip builds better finger-pad control.
             </p>
           </Block>
@@ -310,23 +342,23 @@ function ResultCard({ result }: { result: Recommendation }) {
             {picks.map((pick, i) => (
               <div key={pick.name} className="rounded-2xl p-4"
                 style={{
-                  background: i === 0 ? "rgba(249,115,22,0.05)" : "rgba(255,255,255,0.02)",
-                  border: i === 0 ? "1px solid rgba(249,115,22,0.22)" : "1px solid rgba(255,255,255,0.07)",
+                  background: i === 0 ? `${C.orange}0A` : C.surface,
+                  border: i === 0 ? `1px solid ${C.orange}38` : `1px solid ${C.surfBdr}`,
                 }}>
                 <div className="flex items-start justify-between gap-2 mb-1">
-                  <p className="text-white text-sm font-semibold">{pick.name}</p>
+                  <p className="text-sm font-semibold" style={{ color: C.text }}>{pick.name}</p>
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap"
                       style={i === 0
-                        ? { background: "rgba(249,115,22,0.15)", color: "#F97316", border: "1px solid rgba(249,115,22,0.3)" }
-                        : { background: "rgba(255,255,255,0.05)", color: "rgba(255,255,255,0.33)", border: "1px solid rgba(255,255,255,0.08)" }
+                        ? { background: `${C.orange}20`, color: C.orangeLt, border: `1px solid ${C.orange}40` }
+                        : { background: C.surface, color: C.muted, border: `1px solid ${C.surfBdr}` }
                       }>
                       {i === 0 ? "★ " : ""}{pick.tag}
                     </span>
-                    <span className="text-xs font-semibold text-white whitespace-nowrap">{pick.price}</span>
+                    <span className="text-xs font-semibold whitespace-nowrap" style={{ color: C.text }}>{pick.price}</span>
                   </div>
                 </div>
-                <p className="text-xs mb-3 leading-relaxed" style={{ color: "rgba(255,255,255,0.28)" }}>{pick.desc}</p>
+                <p className="text-xs mb-3 leading-relaxed" style={{ color: "rgba(240,244,248,0.28)" }}>{pick.desc}</p>
                 <div className="flex gap-2">
                   <ShopLink href={pick.amazon} label="Amazon" color="#FF9900" />
                   <ShopLink href={pick.walmart} label="Walmart" color="#0071CE" />
@@ -348,19 +380,20 @@ function CoachMessage({ text }: { text: string }) {
   const parts = text.trim().split(/\*\*(.*?)\*\*/g);
   return (
     <div className="p-4 rounded-2xl" style={{
-      background: "linear-gradient(135deg, rgba(249,115,22,0.07) 0%, rgba(0,0,0,0) 100%)",
-      border: "1px solid rgba(249,115,22,0.18)",
+      background: `linear-gradient(135deg, ${C.cyanDim} 0%, rgba(0,0,0,0) 100%)`,
+      border: `1px solid ${C.cyanBdr}`,
     }}>
       <div className="flex gap-3">
-        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5" style={{ background: "rgba(249,115,22,0.14)" }}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2" strokeLinecap="round">
+        <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5"
+          style={{ background: `${C.cyan}20` }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.cyan} strokeWidth="2" strokeLinecap="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         </div>
-        <p className="text-sm leading-relaxed" style={{ color: "rgba(255,255,255,0.62)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,248,0.65)" }}>
           {parts.map((p, i) =>
             i % 2 === 1
-              ? <strong key={i} className="text-white font-semibold">{p}</strong>
+              ? <strong key={i} className="font-semibold" style={{ color: C.text }}>{p}</strong>
               : <span key={i}>{p}</span>
           )}
         </p>
@@ -376,7 +409,9 @@ function InlineText({ text }: { text: string }) {
   return (
     <>
       {parts.map((p, i) =>
-        i % 2 === 1 ? <strong key={i} className="text-white font-semibold">{p}</strong> : <span key={i}>{p}</span>
+        i % 2 === 1
+          ? <strong key={i} className="font-semibold" style={{ color: C.text }}>{p}</strong>
+          : <span key={i}>{p}</span>
       )}
     </>
   );
@@ -397,7 +432,7 @@ function ShopLink({ href, label, color }: { href: string; label: string; color: 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest mb-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.2)" }}>
+      <p className="text-xs uppercase tracking-widest mb-2.5 font-semibold" style={{ color: "rgba(240,244,248,0.22)" }}>
         {title}
       </p>
       {children}
@@ -407,7 +442,7 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <label className="block text-xs uppercase tracking-widest mb-2 font-medium" style={{ color: "rgba(255,255,255,0.33)" }}>
+    <label className="block text-xs uppercase tracking-widest mb-2 font-medium" style={{ color: "rgba(240,244,248,0.35)" }}>
       {children}
     </label>
   );
@@ -425,7 +460,7 @@ function NumInput({ label, unit, min, max, step = 1, value, onChange }: {
     <div>
       <FieldLabel>{label}</FieldLabel>
       <div className="flex items-center gap-2 rounded-xl px-3 py-3 transition-colors"
-        style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}>
+        style={{ background: C.surface, border: `1px solid ${C.surfBdr}` }}>
         <input
           type="text" inputMode="decimal" value={raw}
           onChange={(e) => {
@@ -437,10 +472,11 @@ function NumInput({ label, unit, min, max, step = 1, value, onChange }: {
             const n = step < 1 ? parseFloat(raw) : parseInt(raw, 10);
             if (isNaN(n) || n < min || n > max) setRaw(String(value));
           }}
-          className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0"
+          className="flex-1 bg-transparent text-lg font-semibold outline-none w-0"
+          style={{ color: C.text }}
           required
         />
-        <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.24)" }}>{unit}</span>
+        <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(240,244,248,0.24)" }}>{unit}</span>
       </div>
     </div>
   );
@@ -484,11 +520,11 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
     <div>
       <div className="flex items-center justify-between mb-2">
         <FieldLabel>Hand Span</FieldLabel>
-        <span className="text-xs" style={{ color: "rgba(255,255,255,0.18)" }}>Thumb to pinky tip, spread wide</span>
+        <span className="text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>Thumb to pinky tip, spread wide</span>
       </div>
       <div className="flex gap-2">
         <div className="flex-1 flex items-center gap-2 rounded-xl px-3 py-3"
-          style={{ background: "rgba(255,255,255,0.04)", border: "1px solid rgba(255,255,255,0.09)" }}>
+          style={{ background: C.surface, border: `1px solid ${C.surfBdr}` }}>
           <input type="text" inputMode="decimal" value={raw}
             onChange={(e) => {
               const s = e.target.value; setRaw(s);
@@ -496,13 +532,15 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
               if (!isNaN(n) && n >= 10 && n <= 35) { onChange(n); clearPhoto(); }
             }}
             onBlur={() => { const n = parseFloat(raw); if (isNaN(n) || n < 10 || n > 35) setRaw(String(value)); }}
-            className="flex-1 bg-transparent text-white text-lg font-semibold outline-none w-0" required />
-          <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.24)" }}>cm</span>
+            className="flex-1 bg-transparent text-lg font-semibold outline-none w-0"
+            style={{ color: C.text }}
+            required />
+          <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(240,244,248,0.24)" }}>cm</span>
         </div>
         <button type="button" onClick={() => fileRef.current?.click()} disabled={scanning}
           title="Measure with AI camera"
           className="w-14 flex items-center justify-center rounded-xl transition-colors disabled:opacity-40 hover:brightness-110"
-          style={{ background: "rgba(249,115,22,0.1)", border: "1px solid rgba(249,115,22,0.25)" }}>
+          style={{ background: `${C.orange}18`, border: `1px solid ${C.orange}40` }}>
           {scanning ? <Spinner /> : <CameraIcon />}
         </button>
         <input ref={fileRef} type="file" accept="image/*" capture="environment" className="hidden"
@@ -510,18 +548,20 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
       </div>
 
       {preview && (
-        <div className="mt-3 rounded-xl overflow-hidden relative" style={{ border: "1px solid rgba(255,255,255,0.09)" }}>
+        <div className="mt-3 rounded-xl overflow-hidden relative" style={{ border: `1px solid ${C.surfBdr}` }}>
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={preview} alt="Hand" className="w-full max-h-48 object-cover" />
           {scanning && (
-            <div className="absolute inset-0 bg-black/65 flex flex-col items-center justify-center gap-2">
+            <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
+              style={{ background: "rgba(12,18,32,0.75)" }}>
               <Spinner large />
-              <p className="text-white text-xs tracking-widest uppercase">AI measuring...</p>
+              <p className="text-xs tracking-widest uppercase" style={{ color: C.text }}>AI measuring...</p>
             </div>
           )}
           {!scanning && (
             <button type="button" onClick={clearPhoto}
-              className="absolute top-2 right-2 w-7 h-7 rounded-full bg-black/70 flex items-center justify-center text-gray-400 hover:text-white text-xs">
+              className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs hover:text-white"
+              style={{ background: "rgba(12,18,32,0.75)", color: C.muted }}>
               X
             </button>
           )}
@@ -530,17 +570,17 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
 
       {aiResult !== null && !scanning && (
         <div className="mt-2 flex items-center gap-1.5">
-          <span className="text-xs" style={{ color: "rgba(255,255,255,0.33)" }}>AI measured:</span>
+          <span className="text-xs" style={{ color: "rgba(240,244,248,0.35)" }}>AI measured:</span>
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-            style={{ background: "rgba(249,115,22,0.12)", color: "#F97316", border: "1px solid rgba(249,115,22,0.25)" }}>
+            style={{ background: `${C.cyan}18`, color: C.cyan, border: `1px solid ${C.cyan}35` }}>
             {aiResult} cm
           </span>
-          <span className="text-xs" style={{ color: "rgba(255,255,255,0.18)" }}>tap to adjust</span>
+          <span className="text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>tap to adjust</span>
         </div>
       )}
       {visionError && !scanning && <p className="mt-1.5 text-xs text-red-400">{visionError}</p>}
       {!preview && (
-        <p className="mt-1.5 text-xs" style={{ color: "rgba(255,255,255,0.18)" }}>
+        <p className="mt-1.5 text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>
           Tip: lay a ruler beside your hand for the most accurate AI measurement
         </p>
       )}
@@ -550,7 +590,7 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
 
 function CameraIcon() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={C.orange} strokeWidth="1.8" strokeLinecap="round">
       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" />
       <circle cx="12" cy="13" r="4" />
     </svg>
@@ -560,7 +600,7 @@ function CameraIcon() {
 function Spinner({ large = false }: { large?: boolean }) {
   const s = large ? 24 : 16;
   return (
-    <svg width={s} height={s} viewBox="0 0 24 24" className="animate-spin" style={{ color: "#F97316" }}>
+    <svg width={s} height={s} viewBox="0 0 24 24" className="animate-spin" style={{ color: C.orange }}>
       <circle cx="12" cy="12" r="10" fill="none" stroke="currentColor" strokeWidth="2.5" strokeDasharray="40" strokeDashoffset="10" />
     </svg>
   );
@@ -589,13 +629,14 @@ function SegCtrl({ options, labels, value, onChange }: {
 }) {
   return (
     <div className="flex gap-1 p-1 rounded-xl"
-      style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.07)" }}>
+      style={{ background: C.surface, border: `1px solid ${C.surfBdr}` }}>
       {options.map((opt, i) => (
         <button key={opt} type="button" onClick={() => onChange(opt)}
           className="flex-1 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all"
           style={value === opt
-            ? { background: "linear-gradient(135deg, #F97316 0%, #C2410C 100%)", color: "#fff" }
-            : { color: "rgba(255,255,255,0.3)" }
+            ? { background: `linear-gradient(135deg, ${C.orange} 0%, #C2320C 100%)`, color: "#fff",
+                boxShadow: `0 0 12px ${C.orange}44` }
+            : { color: C.muted }
           }>
           {labels[i]}
         </button>

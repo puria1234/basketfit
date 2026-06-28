@@ -1,19 +1,30 @@
 import type { Metadata } from "next";
-import { Bebas_Neue, Geist } from "next/font/google";
+import { Syne, Outfit } from "next/font/google";
 import "./globals.css";
 
-const bebas = Bebas_Neue({ weight: "400", variable: "--font-bebas", subsets: ["latin"], display: "swap" });
-const geist = Geist({ variable: "--font-geist-sans", subsets: ["latin"] });
+const syne = Syne({
+  variable: "--font-syne",
+  subsets: ["latin"],
+  weight: ["400", "600", "700", "800"],
+  display: "swap",
+});
+
+const outfit = Outfit({
+  variable: "--font-outfit",
+  subsets: ["latin"],
+  weight: ["300", "400", "500", "600", "700"],
+  display: "swap",
+});
 
 export const metadata: Metadata = {
-  title: "BasketFit — AI Basketball Size Recommender",
+  title: "BasketFit - AI Basketball Size Recommender",
   description:
     "Stop guessing your basketball size. Get a personalised recommendation based on your age, height, hand span, and playing style.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="en" className={`${bebas.variable} ${geist.variable} h-full antialiased`}>
+    <html lang="en" className={`${syne.variable} ${outfit.variable} h-full antialiased`}>
       <body className="min-h-full flex flex-col bg-black text-white">{children}</body>
     </html>
   );

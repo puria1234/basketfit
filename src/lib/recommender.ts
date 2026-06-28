@@ -62,7 +62,7 @@ export function buildRecommendation(profile: UserProfile): Omit<Recommendation, 
     `Based on your profile, a **${info.label}** (${info.circumference} circumference, ${info.weight}) is your ideal ball.`,
     `This size is standard for: ${info.audience}.`,
     trainingSize
-      ? `For skill-focused training, consider dropping to a **${BALL_SIZE_INFO[trainingSize].label}** — the slightly smaller grip builds better handle control.`
+      ? `For skill-focused training, consider dropping to a **${BALL_SIZE_INFO[trainingSize].label}**. The slightly smaller grip builds better finger-pad control.`
       : "",
   ]
     .filter(Boolean)

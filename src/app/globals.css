@@ -7,12 +7,11 @@ html {
 body {
   background: #000;
   color: #fff;
-  font-family: var(--font-geist-sans), system-ui, sans-serif;
+  font-family: var(--font-outfit), system-ui, sans-serif;
 }
 
 .font-display {
-  font-family: var(--font-bebas), 'Arial Black', sans-serif;
-  letter-spacing: 0.02em;
+  font-family: var(--font-syne), sans-serif;
 }
 
 @keyframes float {
@@ -23,11 +22,6 @@ body {
 @keyframes bounce-y {
   0%, 100% { transform: translateY(0); opacity: 1; }
   50% { transform: translateY(6px); opacity: 0.4; }
-}
-
-@keyframes shimmer {
-  0% { background-position: -200% center; }
-  100% { background-position: 200% center; }
 }
 
 @keyframes fade-up {
@@ -49,12 +43,12 @@ body {
   from { width: 0%; }
 }
 
-.animate-float { animation: float 4s ease-in-out infinite; }
-.animate-bounce-y { animation: bounce-y 1.4s ease-in-out infinite; }
-.animate-fade-up { animation: fade-up 0.7s ease both; }
-.animate-fade-up-delay-1 { animation: fade-up 0.7s 0.12s ease both; }
-.animate-fade-up-delay-2 { animation: fade-up 0.7s 0.25s ease both; }
-.animate-fade-up-delay-3 { animation: fade-up 0.7s 0.38s ease both; }
-.animate-orb-1 { animation: orb-drift-1 9s ease-in-out infinite; }
-.animate-orb-2 { animation: orb-drift-2 13s ease-in-out infinite; }
-.animate-score { animation: score-fill 1.2s cubic-bezier(0.22,1,0.36,1) both; }
+.animate-float        { animation: float 4s ease-in-out infinite; }
+.animate-bounce-y     { animation: bounce-y 1.4s ease-in-out infinite; }
+.animate-fade-up      { animation: fade-up 0.7s ease both; }
+.animate-fade-up-d1   { animation: fade-up 0.7s 0.12s ease both; }
+.animate-fade-up-d2   { animation: fade-up 0.7s 0.25s ease both; }
+.animate-fade-up-d3   { animation: fade-up 0.7s 0.38s ease both; }
+.animate-orb-1        { animation: orb-drift-1 9s ease-in-out infinite; }
+.animate-orb-2        { animation: orb-drift-2 13s ease-in-out infinite; }
+.animate-score        { animation: score-fill 1.2s cubic-bezier(0.22,1,0.36,1) both; }

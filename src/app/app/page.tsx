@@ -7,7 +7,6 @@ import { BALL_SIZE_INFO } from "@/lib/types";
 import { Logo } from "@/components/Logo";
 
 const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: false });
-const Logo3D = dynamic(() => import("@/components/Logo3D"), { ssr: false, loading: () => <Logo size={26} /> });
 
 // ─── Palette ──────────────────────────────────────────────────────────────────
 
@@ -180,7 +179,7 @@ export default function AppPage() {
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
         style={{ backdropFilter: "blur(20px)", background: "rgba(12,18,32,0.82)", borderBottom: `1px solid ${C.cyanBdr}` }}>
         <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-          <Logo3D size={30} />
+          <Logo size={26} />
           <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
         </a>
         <a href="/" className="text-sm font-medium flex items-center gap-1.5 transition-opacity hover:opacity-70"

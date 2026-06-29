@@ -11,18 +11,13 @@ const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: f
 // ─── Palette ──────────────────────────────────────────────────────────────────
 
 const C = {
-  orange:   "#FF5722",
-  orangeLt: "#FF7D53",
-  cyan:     "#06B6D4",
-  cyanDim:  "rgba(6,182,212,0.10)",
-  cyanBdr:  "rgba(6,182,212,0.18)",
-  lime:     "#84CC16",
-  text:     "#F0F4F8",
-  muted:    "rgba(240,244,248,0.37)",
-  surface:  "rgba(255,255,255,0.03)",
-  surfBdr:  "rgba(255,255,255,0.07)",
-  bg:       "#0C1220",
-  navy:     "#111827",
+  orange:  "#FF5722",
+  text:    "#FFFFFF",
+  muted:   "rgba(255,255,255,0.42)",
+  dim:     "rgba(255,255,255,0.22)",
+  surface: "#141414",
+  surfBdr: "rgba(255,255,255,0.08)",
+  bg:      "#000000",
 };
 
 // ─── Product data ────────────────────────────────────────────────────────────
@@ -165,19 +160,16 @@ export default function AppPage() {
 
   return (
     <div style={{ background: C.bg, minHeight: "100vh" }}>
-      {/* Ambient orbs */}
+      {/* Ambient orb */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden" style={{ zIndex: 0 }}>
         <div className="animate-orb-a absolute rounded-full"
           style={{ width: 520, height: 520, top: -120, right: -100,
-            background: `radial-gradient(circle, ${C.orange}22 0%, transparent 70%)` }} />
-        <div className="animate-orb-b absolute rounded-full"
-          style={{ width: 400, height: 400, bottom: 100, left: -80,
-            background: `radial-gradient(circle, ${C.cyan}18 0%, transparent 70%)` }} />
+            background: `radial-gradient(circle, rgba(255,87,34,0.10) 0%, transparent 70%)`, filter: "blur(60px)" }} />
       </div>
 
       {/* Nav */}
       <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
-        style={{ backdropFilter: "blur(20px)", background: "rgba(12,18,32,0.82)", borderBottom: `1px solid ${C.cyanBdr}` }}>
+        style={{ backdropFilter: "blur(20px)", background: "rgba(0,0,0,0.85)", borderBottom: `1px solid ${C.surfBdr}` }}>
         <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
           <Logo size={26} />
           <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
@@ -245,12 +237,10 @@ export default function AppPage() {
               disabled={loading}
               className="w-full py-4 rounded-2xl font-semibold text-sm tracking-widest uppercase transition-all active:scale-95"
               style={{
-                background: loading
-                  ? "rgba(255,255,255,0.05)"
-                  : `linear-gradient(135deg, ${C.orange} 0%, #C2320C 100%)`,
+                background: loading ? "rgba(255,255,255,0.05)" : C.orange,
                 color: loading ? C.muted : "#fff",
                 cursor: loading ? "not-allowed" : "pointer",
-                boxShadow: loading ? "none" : `0 0 32px ${C.orange}44`,
+                boxShadow: loading ? "none" : "0 4px 24px rgba(255,87,34,0.35)",
               }}
             >
               {loading ? "Analysing..." : "Get My Size"}
@@ -279,20 +269,20 @@ function ResultCard({ result }: { result: Recommendation }) {
 
   return (
     <div className="rounded-3xl overflow-hidden"
-      style={{ border: `1px solid ${C.cyanBdr}`, background: "#0E1627" }}>
+      style={{ border: `1px solid ${C.surfBdr}`, background: C.surface }}>
       {/* Header */}
       <div className="relative p-6 overflow-hidden"
-        style={{ background: `linear-gradient(135deg, #0E1627 0%, #1A0E08 60%, #0E1627 100%)` }}>
-        <div className="absolute right-3 top-1/2 -translate-y-1/2 font-display font-bold leading-none pointer-events-none select-none"
-          style={{ fontSize: 130, color: C.orange, opacity: 0.06 }}>
+        style={{ background: "#1a1a1a", borderBottom: `1px solid ${C.surfBdr}` }}>
+        <div className="absolute right-3 top-1/2 -translate-y-1/2 font-display font-black leading-none pointer-events-none select-none"
+          style={{ fontSize: 130, color: C.text, opacity: 0.04 }}>
           {result.primarySize}
         </div>
 
-        <p className="text-xs uppercase tracking-widest mb-2" style={{ color: `${C.orange}88` }}>
+        <p className="text-xs uppercase tracking-widest mb-2" style={{ color: C.muted }}>
           Your Recommended Size
         </p>
         <div className="flex items-center gap-3">
-          <span className="font-display font-bold leading-none" style={{ fontSize: 76, color: C.orange }}>
+          <span className="font-display font-black leading-none" style={{ fontSize: 76, color: C.orange }}>
             {result.primarySize}
           </span>
           <div>
@@ -304,13 +294,13 @@ function ResultCard({ result }: { result: Recommendation }) {
         </div>
 
         <div className="mt-5">
-          <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.06)" }}>
+          <div className="h-1 w-full rounded-full overflow-hidden" style={{ background: "rgba(255,255,255,0.08)" }}>
             <div className="h-full rounded-full animate-score"
-              style={{ width: `${result.score}%`, background: `linear-gradient(90deg, ${C.orange} 0%, ${C.cyan} 100%)` }} />
+              style={{ width: `${result.score}%`, background: C.orange }} />
           </div>
           <div className="flex justify-between mt-1.5">
-            <p className="text-xs" style={{ color: "rgba(255,255,255,0.22)" }}>Fit Score</p>
-            <p className="text-xs font-semibold" style={{ color: C.cyan }}>{result.score}/100</p>
+            <p className="text-xs" style={{ color: C.dim }}>Fit Score</p>
+            <p className="text-xs font-semibold" style={{ color: C.orange }}>{result.score}/100</p>
           </div>
         </div>
       </div>
@@ -324,7 +314,7 @@ function ResultCard({ result }: { result: Recommendation }) {
         </Block>
 
         {result.trainingSize && (
-          <Block title="Training tip">
+          <Block title="Training Tip">
             <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
               Use a{" "}
               <span className="font-semibold" style={{ color: C.text }}>{BALL_SIZE_INFO[result.trainingSize].label}</span>
@@ -342,23 +332,23 @@ function ResultCard({ result }: { result: Recommendation }) {
             {picks.map((pick, i) => (
               <div key={pick.name} className="rounded-2xl p-4"
                 style={{
-                  background: i === 0 ? `${C.orange}0A` : C.surface,
-                  border: i === 0 ? `1px solid ${C.orange}38` : `1px solid ${C.surfBdr}`,
+                  background: i === 0 ? "rgba(255,87,34,0.07)" : "rgba(255,255,255,0.02)",
+                  border: i === 0 ? `1px solid rgba(255,87,34,0.28)` : `1px solid ${C.surfBdr}`,
                 }}>
                 <div className="flex items-start justify-between gap-2 mb-1">
                   <p className="text-sm font-semibold" style={{ color: C.text }}>{pick.name}</p>
                   <div className="flex items-center gap-2 shrink-0">
                     <span className="text-[10px] font-semibold px-2 py-0.5 rounded-full whitespace-nowrap"
                       style={i === 0
-                        ? { background: `${C.orange}20`, color: C.orangeLt, border: `1px solid ${C.orange}40` }
-                        : { background: C.surface, color: C.muted, border: `1px solid ${C.surfBdr}` }
+                        ? { background: "rgba(255,87,34,0.15)", color: C.orange, border: "1px solid rgba(255,87,34,0.35)" }
+                        : { background: "rgba(255,255,255,0.05)", color: C.muted, border: `1px solid ${C.surfBdr}` }
                       }>
                       {i === 0 ? "★ " : ""}{pick.tag}
                     </span>
                     <span className="text-xs font-semibold whitespace-nowrap" style={{ color: C.text }}>{pick.price}</span>
                   </div>
                 </div>
-                <p className="text-xs mb-3 leading-relaxed" style={{ color: "rgba(240,244,248,0.28)" }}>{pick.desc}</p>
+                <p className="text-xs mb-3 leading-relaxed" style={{ color: C.dim }}>{pick.desc}</p>
                 <div className="flex gap-2">
                   <ShopLink href={pick.amazon} label="Amazon" color="#FF9900" />
                   <ShopLink href={pick.walmart} label="Walmart" color="#0071CE" />
@@ -380,17 +370,17 @@ function CoachMessage({ text }: { text: string }) {
   const parts = text.trim().split(/\*\*(.*?)\*\*/g);
   return (
     <div className="p-4 rounded-2xl" style={{
-      background: `linear-gradient(135deg, ${C.cyanDim} 0%, rgba(0,0,0,0) 100%)`,
-      border: `1px solid ${C.cyanBdr}`,
+      background: "rgba(255,255,255,0.03)",
+      border: `1px solid ${C.surfBdr}`,
     }}>
       <div className="flex gap-3">
         <div className="w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5"
-          style={{ background: `${C.cyan}20` }}>
-          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.cyan} strokeWidth="2" strokeLinecap="round">
+          style={{ background: "rgba(255,87,34,0.12)" }}>
+          <svg width="13" height="13" viewBox="0 0 24 24" fill="none" stroke={C.orange} strokeWidth="2" strokeLinecap="round">
             <path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z" />
           </svg>
         </div>
-        <p className="text-sm leading-relaxed" style={{ color: "rgba(240,244,248,0.65)" }}>
+        <p className="text-sm leading-relaxed" style={{ color: C.muted }}>
           {parts.map((p, i) =>
             i % 2 === 1
               ? <strong key={i} className="font-semibold" style={{ color: C.text }}>{p}</strong>
@@ -432,7 +422,7 @@ function ShopLink({ href, label, color }: { href: string; label: string; color: 
 function Block({ title, children }: { title: string; children: React.ReactNode }) {
   return (
     <div>
-      <p className="text-xs uppercase tracking-widest mb-2.5 font-semibold" style={{ color: "rgba(240,244,248,0.22)" }}>
+      <p className="text-xs uppercase tracking-widest mb-2.5 font-semibold" style={{ color: "rgba(255,255,255,0.22)" }}>
         {title}
       </p>
       {children}
@@ -442,7 +432,7 @@ function Block({ title, children }: { title: string; children: React.ReactNode }
 
 function FieldLabel({ children }: { children: React.ReactNode }) {
   return (
-    <label className="block text-xs uppercase tracking-widest mb-2 font-medium" style={{ color: "rgba(240,244,248,0.35)" }}>
+    <label className="block text-xs uppercase tracking-widest mb-2 font-medium" style={{ color: "rgba(255,255,255,0.35)" }}>
       {children}
     </label>
   );
@@ -476,7 +466,7 @@ function NumInput({ label, unit, min, max, step = 1, value, onChange }: {
           style={{ color: C.text }}
           required
         />
-        <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(240,244,248,0.24)" }}>{unit}</span>
+        <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.24)" }}>{unit}</span>
       </div>
     </div>
   );
@@ -520,7 +510,7 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
     <div>
       <div className="flex items-center justify-between mb-2">
         <FieldLabel>Hand Span</FieldLabel>
-        <span className="text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>Thumb to pinky tip, spread wide</span>
+        <span className="text-xs" style={{ color: "rgba(255,255,255,0.2)" }}>Thumb to pinky tip, spread wide</span>
       </div>
       <div className="flex gap-2">
         <div className="flex-1 flex items-center gap-2 rounded-xl px-3 py-3"
@@ -535,7 +525,7 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
             className="flex-1 bg-transparent text-lg font-semibold outline-none w-0"
             style={{ color: C.text }}
             required />
-          <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(240,244,248,0.24)" }}>cm</span>
+          <span className="text-xs uppercase tracking-widest shrink-0" style={{ color: "rgba(255,255,255,0.24)" }}>cm</span>
         </div>
         <button type="button" onClick={() => fileRef.current?.click()} disabled={scanning}
           title="Measure with AI camera"
@@ -553,7 +543,7 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
           <img src={preview} alt="Hand" className="w-full max-h-48 object-cover" />
           {scanning && (
             <div className="absolute inset-0 flex flex-col items-center justify-center gap-2"
-              style={{ background: "rgba(12,18,32,0.75)" }}>
+              style={{ background: "rgba(0,0,0,0.75)" }}>
               <Spinner large />
               <p className="text-xs tracking-widest uppercase" style={{ color: C.text }}>AI measuring...</p>
             </div>
@@ -561,7 +551,7 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
           {!scanning && (
             <button type="button" onClick={clearPhoto}
               className="absolute top-2 right-2 w-7 h-7 rounded-full flex items-center justify-center text-xs hover:text-white"
-              style={{ background: "rgba(12,18,32,0.75)", color: C.muted }}>
+              style={{ background: "rgba(0,0,0,0.75)", color: C.muted }}>
               X
             </button>
           )}
@@ -570,17 +560,17 @@ function HandSpanInput({ value, onChange }: { value: number; onChange: (v: numbe
 
       {aiResult !== null && !scanning && (
         <div className="mt-2 flex items-center gap-1.5">
-          <span className="text-xs" style={{ color: "rgba(240,244,248,0.35)" }}>AI measured:</span>
+          <span className="text-xs" style={{ color: C.muted }}>AI measured:</span>
           <span className="text-xs font-semibold px-2 py-0.5 rounded-full"
-            style={{ background: `${C.cyan}18`, color: C.cyan, border: `1px solid ${C.cyan}35` }}>
+            style={{ background: "rgba(255,87,34,0.15)", color: C.orange, border: "1px solid rgba(255,87,34,0.35)" }}>
             {aiResult} cm
           </span>
-          <span className="text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>tap to adjust</span>
+          <span className="text-xs" style={{ color: C.dim }}>tap to adjust</span>
         </div>
       )}
       {visionError && !scanning && <p className="mt-1.5 text-xs text-red-400">{visionError}</p>}
       {!preview && (
-        <p className="mt-1.5 text-xs" style={{ color: "rgba(240,244,248,0.2)" }}>
+        <p className="mt-1.5 text-xs" style={{ color: C.dim }}>
           Tip: lay a ruler beside your hand for the most accurate AI measurement
         </p>
       )}
@@ -634,8 +624,7 @@ function SegCtrl({ options, labels, value, onChange }: {
         <button key={opt} type="button" onClick={() => onChange(opt)}
           className="flex-1 py-2 rounded-lg text-xs font-semibold tracking-wide transition-all"
           style={value === opt
-            ? { background: `linear-gradient(135deg, ${C.orange} 0%, #C2320C 100%)`, color: "#fff",
-                boxShadow: `0 0 12px ${C.orange}44` }
+            ? { background: C.orange, color: "#fff", boxShadow: "0 2px 12px rgba(255,87,34,0.35)" }
             : { color: C.muted }
           }>
           {labels[i]}

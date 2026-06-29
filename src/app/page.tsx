@@ -44,16 +44,13 @@ function Reveal({ children, delay = 0, className = "" }: {
 // ─── Palette ──────────────────────────────────────────────────────────────────
 
 const C = {
-  orange:   "#FF5722",
-  orangeLt: "#FF7D53",
-  cyan:     "#06B6D4",
-  cyanDim:  "rgba(6,182,212,0.10)",
-  cyanBdr:  "rgba(6,182,212,0.18)",
-  text:     "#F0F4F8",
-  muted:    "rgba(240,244,248,0.40)",
-  surface:  "rgba(255,255,255,0.03)",
-  surfBdr:  "rgba(255,255,255,0.07)",
-  bg:       "#0C1220",
+  orange: "#FF5722",
+  text:   "#FFFFFF",
+  muted:  "rgba(255,255,255,0.42)",
+  dim:    "rgba(255,255,255,0.22)",
+  card:   "#141414",
+  border: "rgba(255,255,255,0.09)",
+  bg:     "#000000",
 };
 
 // ─── Landing page ─────────────────────────────────────────────────────────────
@@ -65,24 +62,11 @@ export default function LandingPage() {
 
       {/* ══ HERO ══ */}
       <section className="relative min-h-screen flex flex-col items-center justify-center overflow-x-hidden" style={{ background: C.bg }}>
-        {/* Cyan grid */}
-        <div className="absolute inset-0 pointer-events-none" style={{
-          backgroundImage: `linear-gradient(${C.cyanDim} 1px, transparent 1px), linear-gradient(to right, ${C.cyanDim} 1px, transparent 1px)`,
-          backgroundSize: "60px 60px",
-        }} />
-
-        {/* Orange glow behind ball */}
+        {/* Subtle orange glow behind ball */}
         <div className="absolute pointer-events-none animate-orb-a" style={{
-          width: 500, height: 500, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(255,87,34,0.15) 0%, transparent 65%)",
-          top: "5%", left: "calc(50% - 250px)", filter: "blur(60px)",
-        }} />
-
-        {/* Cyan glow bottom-left */}
-        <div className="absolute pointer-events-none animate-orb-b" style={{
-          width: 380, height: 380, borderRadius: "50%",
-          background: "radial-gradient(circle, rgba(6,182,212,0.12) 0%, transparent 65%)",
-          bottom: "8%", left: "5%", filter: "blur(70px)",
+          width: 480, height: 480, borderRadius: "50%",
+          background: "radial-gradient(circle, rgba(255,87,34,0.12) 0%, transparent 65%)",
+          top: "4%", left: "calc(50% - 240px)", filter: "blur(80px)",
         }} />
 
         {/* 3D Ball */}
@@ -95,22 +79,21 @@ export default function LandingPage() {
         {/* Copy */}
         <div className="relative z-10 text-center px-5 -mt-2">
           <div className="flex items-center justify-center gap-2 mb-6 animate-fade-up">
-            <Pill color={C.orange}>AI-Powered</Pill>
-            <Pill color={C.cyan}>Free Forever</Pill>
+            <Pill>AI-Powered</Pill>
+            <Pill>Free Forever</Pill>
           </div>
 
           <h1
-            className="font-display font-extrabold leading-[0.88] animate-fade-up-d1"
+            className="font-display font-black leading-[0.88] animate-fade-up-d1"
             style={{
-              fontSize: "clamp(64px, 14vw, 176px)",
-              letterSpacing: "-0.025em",
-              background: `linear-gradient(160deg, ${C.text} 0%, ${C.text} 42%, ${C.cyan} 100%)`,
-              WebkitBackgroundClip: "text",
-              WebkitTextFillColor: "transparent",
-              backgroundClip: "text",
+              fontSize: "clamp(72px, 16vw, 200px)",
+              letterSpacing: "-0.03em",
+              color: C.text,
             }}
           >
-            BASKETFIT
+            BASKET
+            <br />
+            FIT
           </h1>
 
           <p className="mt-6 text-base sm:text-lg max-w-xs mx-auto leading-relaxed animate-fade-up-d2" style={{ color: C.muted }}>
@@ -125,44 +108,42 @@ export default function LandingPage() {
                 <path d="M5 12h14M12 5l7 7-7 7" />
               </svg>
             </a>
-            <a href="#how-it-works" className="btn-outline">
-              How it works
-            </a>
+            <a href="#how-it-works" className="btn-outline">How it works</a>
           </div>
         </div>
 
         {/* Scroll caret */}
         <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce-y">
-          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(6,182,212,0.30)" strokeWidth="2" strokeLinecap="round">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.2)" strokeWidth="2" strokeLinecap="round">
             <polyline points="6 9 12 15 18 9" />
           </svg>
         </div>
       </section>
 
       {/* ══ FEATURES ══ */}
-      <section className="py-24 px-5" style={{ background: C.bg, borderTop: `1px solid ${C.cyanBdr}` }}>
+      <section className="py-24 px-5" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <Tag color={C.cyan}>What we do</Tag>
+            <Label>What we do</Label>
             <h2
-              className="font-display font-extrabold mt-4 mb-14"
-              style={{ fontSize: "clamp(36px, 6.5vw, 76px)", lineHeight: 1.0, letterSpacing: "-0.02em", color: C.text }}
+              className="font-display font-black mt-4 mb-14"
+              style={{ fontSize: "clamp(40px, 7vw, 88px)", lineHeight: 1.0, letterSpacing: "-0.03em", color: C.text }}
             >
               Smart sizing.<br />
               <span style={{ color: C.orange }}>Built for players.</span>
             </h2>
           </Reveal>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
             {[
-              { icon: <IconTarget />, title: "Smart Fit Score",   desc: "We weigh age, height, hand span, experience and gender to produce a 0-100 fit score mapped to the right ball size." },
-              { icon: <IconCamera />, title: "AI Vision Measure", desc: "Photograph your hand with a ruler beside it. MiniMax M3 reads your hand span in seconds." },
-              { icon: <IconBag />,    title: "Shop Ready",         desc: "Every recommendation links directly to Amazon, Walmart and Target with curated picks and estimated prices." },
+              { icon: <IconTarget />, title: "Smart Fit Score",    desc: "We weigh age, height, hand span, experience and gender to produce a 0-100 fit score mapped to the right ball size." },
+              { icon: <IconCamera />, title: "AI Vision Measure",  desc: "Photograph your hand with a ruler beside it. MiniMax M3 reads your hand span in seconds." },
+              { icon: <IconBag />,    title: "Shop Ready",          desc: "Every recommendation links directly to Amazon, Walmart and Target with curated picks and estimated prices." },
             ].map((c, i) => (
               <Reveal key={c.title} delay={i * 90} className="h-full">
                 <div className="feature-card">
                   <div className="w-10 h-10 rounded-xl flex items-center justify-center shrink-0"
-                    style={{ background: "rgba(6,182,212,0.14)", border: "1px solid rgba(6,182,212,0.22)" }}>
+                    style={{ background: "rgba(255,255,255,0.06)", border: "1px solid rgba(255,255,255,0.1)" }}>
                     {c.icon}
                   </div>
                   <div>
@@ -177,31 +158,31 @@ export default function LandingPage() {
       </section>
 
       {/* ══ HOW IT WORKS ══ */}
-      <section id="how-it-works" className="py-24 px-5" style={{ background: "#0E1627", borderTop: `1px solid ${C.cyanBdr}` }}>
+      <section id="how-it-works" className="py-24 px-5" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <Tag color={C.orange}>The process</Tag>
+            <Label>The process</Label>
             <h2
-              className="font-display font-extrabold mt-4 mb-16"
-              style={{ fontSize: "clamp(36px, 6.5vw, 76px)", lineHeight: 1.0, letterSpacing: "-0.02em", color: C.text }}
+              className="font-display font-black mt-4 mb-16"
+              style={{ fontSize: "clamp(40px, 7vw, 88px)", lineHeight: 1.0, letterSpacing: "-0.03em", color: C.text }}
             >
-              Three steps to your<br />
-              <span style={{ color: C.muted }}>perfect ball.</span>
+              Three steps.<br />
+              <span style={{ color: C.muted }}>Perfect ball.</span>
             </h2>
           </Reveal>
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-12">
             {[
-              { n: "01", col: C.orange, title: "Tell us about you",  desc: "Enter age, height, hand span and experience. Under 30 seconds." },
-              { n: "02", col: C.cyan,   title: "Get your AI result", desc: "We calculate your fit score and recommend the right size with personalised coaching tips." },
-              { n: "03", col: C.orange, title: "Buy the right ball", desc: "Click through to Amazon, Walmart or Target and start playing with the correct size." },
+              { n: "01", title: "Tell us about you",  desc: "Enter age, height, hand span and experience. Under 30 seconds." },
+              { n: "02", title: "Get your AI result", desc: "We calculate your fit score and recommend the right size with personalised coaching tips." },
+              { n: "03", title: "Buy the right ball", desc: "Click through to Amazon, Walmart or Target and start playing with the correct size." },
             ].map((step, i) => (
               <Reveal key={step.n} delay={i * 100}>
                 <div className="flex flex-col gap-3">
-                  <span className="font-display font-bold select-none"
-                    style={{ fontSize: 86, lineHeight: 1, color: step.col, opacity: 0.18, letterSpacing: "-0.03em" }}>
+                  <span className="font-display font-black select-none"
+                    style={{ fontSize: 88, lineHeight: 1, color: C.text, opacity: 0.07, letterSpacing: "-0.04em" }}>
                     {step.n}
                   </span>
-                  <div className="w-8 h-0.5 -mt-1 rounded-full" style={{ background: step.col }} />
+                  <div className="w-8 h-px -mt-1" style={{ background: C.orange }} />
                   <h3 className="font-semibold text-base" style={{ color: C.text }}>{step.title}</h3>
                   <p className="text-sm leading-relaxed" style={{ color: C.muted }}>{step.desc}</p>
                 </div>
@@ -212,13 +193,13 @@ export default function LandingPage() {
       </section>
 
       {/* ══ SIZES ══ */}
-      <section className="py-24 px-5" style={{ background: C.bg, borderTop: `1px solid ${C.cyanBdr}` }}>
+      <section className="py-24 px-5" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
         <div className="max-w-5xl mx-auto">
           <Reveal>
-            <Tag color={C.orange}>The sizes</Tag>
+            <Label>The sizes</Label>
             <h2
-              className="font-display font-extrabold mt-4 mb-12"
-              style={{ fontSize: "clamp(36px, 6.5vw, 76px)", lineHeight: 1.0, letterSpacing: "-0.02em", color: C.text }}
+              className="font-display font-black mt-4 mb-12"
+              style={{ fontSize: "clamp(40px, 7vw, 88px)", lineHeight: 1.0, letterSpacing: "-0.03em", color: C.text }}
             >
               Know your options.
             </h2>
@@ -226,18 +207,17 @@ export default function LandingPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             {([7, 6, 5, 3] as BallSize[]).map((s, i) => {
               const info = BALL_SIZE_INFO[s];
-              const col = i % 2 === 0 ? C.orange : C.cyan;
               return (
                 <Reveal key={s} delay={i * 70}>
                   <div className="size-card">
-                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-display font-bold text-lg shrink-0"
-                      style={{ background: `${col}1A`, border: `2px solid ${col}50`, color: col }}>
+                    <div className="w-12 h-12 rounded-full flex items-center justify-center font-display font-black text-lg shrink-0"
+                      style={{ background: "rgba(255,87,34,0.12)", border: `1.5px solid rgba(255,87,34,0.35)`, color: C.orange }}>
                       {s}
                     </div>
                     <div>
                       <p className="font-semibold text-sm" style={{ color: C.text }}>{info.label}</p>
                       <p className="text-xs mt-0.5" style={{ color: C.muted }}>{info.circumference} · {info.weight}</p>
-                      <p className="text-xs mt-1 leading-relaxed" style={{ color: "rgba(240,244,248,0.22)" }}>{info.audience}</p>
+                      <p className="text-xs mt-1 leading-relaxed" style={{ color: C.dim }}>{info.audience}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -248,14 +228,13 @@ export default function LandingPage() {
       </section>
 
       {/* ══ CTA BANNER ══ */}
-      <section className="py-32 px-5 text-center relative overflow-hidden" style={{ background: "#0E1627", borderTop: `1px solid ${C.cyanBdr}` }}>
-        <div className="absolute pointer-events-none" style={{ width: 500, height: 500, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,87,34,0.09) 0%, transparent 65%)", top: "50%", left: "30%", transform: "translate(-50%,-50%)", filter: "blur(80px)" }} />
-        <div className="absolute pointer-events-none" style={{ width: 400, height: 400, borderRadius: "50%", background: "radial-gradient(circle, rgba(6,182,212,0.09) 0%, transparent 65%)", top: "50%", right: "20%", transform: "translateY(-50%)", filter: "blur(80px)" }} />
+      <section className="py-32 px-5 text-center relative overflow-hidden" style={{ background: C.bg, borderTop: `1px solid ${C.border}` }}>
+        <div className="absolute pointer-events-none" style={{ width: 600, height: 600, borderRadius: "50%", background: "radial-gradient(circle, rgba(255,87,34,0.08) 0%, transparent 65%)", top: "50%", left: "50%", transform: "translate(-50%,-50%)", filter: "blur(80px)" }} />
 
         <Reveal>
           <h2
-            className="font-display font-extrabold mb-4 relative z-10"
-            style={{ fontSize: "clamp(42px, 8.5vw, 104px)", lineHeight: 1.0, letterSpacing: "-0.025em" }}
+            className="font-display font-black mb-4 relative z-10"
+            style={{ fontSize: "clamp(48px, 10vw, 120px)", lineHeight: 1.0, letterSpacing: "-0.03em" }}
           >
             <span style={{ color: C.text }}>Ready to find</span><br />
             <span style={{ color: C.orange }}>your size?</span>
@@ -271,12 +250,12 @@ export default function LandingPage() {
       </section>
 
       {/* ══ FOOTER ══ */}
-      <footer className="py-10 px-5 text-center" style={{ borderTop: `1px solid ${C.cyanBdr}`, background: C.bg }}>
+      <footer className="py-10 px-5 text-center" style={{ borderTop: `1px solid ${C.border}`, background: C.bg }}>
         <a href="/" className="inline-flex items-center justify-center gap-2.5 mb-3 hover:opacity-70 transition-opacity">
           <Logo size={22} />
-          <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
+          <span className="font-display font-black text-base tracking-tight" style={{ color: C.text }}>BasketFit</span>
         </a>
-        <p className="text-xs uppercase tracking-widest" style={{ color: "rgba(240,244,248,0.18)" }}>
+        <p className="text-xs uppercase tracking-widest" style={{ color: C.dim }}>
           AI Basketball Size Recommender · {new Date().getFullYear()}
         </p>
       </footer>
@@ -289,10 +268,10 @@ export default function LandingPage() {
 function LandingNav() {
   return (
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
-      style={{ backdropFilter: "blur(20px)", background: "rgba(12,18,32,0.85)", borderBottom: `1px solid ${C.cyanBdr}` }}>
+      style={{ backdropFilter: "blur(20px)", background: "rgba(0,0,0,0.85)", borderBottom: `1px solid ${C.border}` }}>
       <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
         <Logo size={28} />
-        <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
+        <span className="font-display font-black text-base tracking-tight" style={{ color: C.text }}>BasketFit</span>
       </a>
       <a href="/app" className="btn-primary" style={{ padding: "10px 20px", fontSize: "13px", borderRadius: "10px" }}>
         Get Started
@@ -303,19 +282,19 @@ function LandingNav() {
 
 // ─── Atoms ────────────────────────────────────────────────────────────────────
 
-function Tag({ children, color }: { children: React.ReactNode; color: string }) {
+function Label({ children }: { children: React.ReactNode }) {
   return (
-    <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.28em] font-semibold" style={{ color }}>
-      <span className="w-1 h-1 rounded-full inline-block" style={{ background: color }} />
+    <span className="inline-flex items-center gap-1.5 text-xs uppercase tracking-[0.28em] font-semibold" style={{ color: C.muted }}>
+      <span className="w-1 h-1 rounded-full inline-block" style={{ background: C.muted }} />
       {children}
     </span>
   );
 }
 
-function Pill({ children, color }: { children: React.ReactNode; color: string }) {
+function Pill({ children }: { children: React.ReactNode }) {
   return (
     <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold"
-      style={{ background: `${color}18`, border: `1px solid ${color}40`, color }}>
+      style={{ background: "rgba(255,255,255,0.08)", border: "1px solid rgba(255,255,255,0.14)", color: "rgba(255,255,255,0.7)" }}>
       {children}
     </span>
   );
@@ -325,21 +304,21 @@ function Pill({ children, color }: { children: React.ReactNode; color: string })
 
 function IconTarget() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={C.cyan} strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.8" strokeLinecap="round">
       <circle cx="12" cy="12" r="10" /><circle cx="12" cy="12" r="6" /><circle cx="12" cy="12" r="2" />
     </svg>
   );
 }
 function IconCamera() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={C.cyan} strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.8" strokeLinecap="round">
       <path d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z" /><circle cx="12" cy="13" r="4" />
     </svg>
   );
 }
 function IconBag() {
   return (
-    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke={C.cyan} strokeWidth="1.8" strokeLinecap="round">
+    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,0.6)" strokeWidth="1.8" strokeLinecap="round">
       <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z" /><line x1="3" y1="6" x2="21" y2="6" /><path d="M16 10a4 4 0 0 1-8 0" />
     </svg>
   );

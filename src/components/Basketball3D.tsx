@@ -88,7 +88,7 @@ function BasketballMesh({ size }: { size: BallSize }) {
 export default function Basketball3D({ size = 7 }: { size?: BallSize }) {
   return (
     <div style={{ width: "100%", height: 320 }}>
-      <Canvas camera={{ position: [0, 0, 4.5], fov: 45 }}>
+      <Canvas camera={{ position: [0, 0, 5.5], fov: 45 }}>
         <ambientLight intensity={0.45} />
         <pointLight position={[4, 5, 4]} intensity={3.2} color="#ffffff" />
         <pointLight position={[-3, -1, 3]} intensity={1.1} color="#40E0FF" />

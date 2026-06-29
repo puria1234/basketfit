@@ -7,7 +7,6 @@ import { BALL_SIZE_INFO } from "@/lib/types";
 import type { BallSize } from "@/lib/types";
 
 const Basketball3D = dynamic(() => import("@/components/Basketball3D"), { ssr: false });
-const Logo3D = dynamic(() => import("@/components/Logo3D"), { ssr: false, loading: () => <Logo size={28} /> });
 
 // ─── Scroll-reveal ────────────────────────────────────────────────────────────
 
@@ -286,7 +285,7 @@ export default function LandingPage() {
       {/* ══ FOOTER ══ */}
       <footer className="py-10 px-5 text-center" style={{ borderTop: `1px solid ${C.cyanBdr}`, background: C.bg }}>
         <a href="/" className="inline-flex items-center justify-center gap-2.5 mb-3 hover:opacity-70 transition-opacity">
-          <Logo3D size={26} />
+          <Logo size={22} />
           <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
         </a>
         <p className="text-xs uppercase tracking-widest" style={{ color: "rgba(240,244,248,0.18)" }}>
@@ -304,7 +303,7 @@ function LandingNav() {
     <nav className="fixed top-0 left-0 right-0 z-50 flex items-center justify-between px-6 py-4"
       style={{ backdropFilter: "blur(20px)", background: "rgba(12,18,32,0.82)", borderBottom: `1px solid ${C.cyanBdr}` }}>
       <a href="/" className="flex items-center gap-2.5 hover:opacity-80 transition-opacity">
-        <Logo3D size={32} />
+        <Logo size={28} />
         <span className="font-display font-bold text-base tracking-wide" style={{ color: C.text }}>BasketFit</span>
       </a>
       <a href="/app"
